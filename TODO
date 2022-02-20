@@ -1,1 +1,32 @@
-- Django Floating Labels - https://www.youtube.com/watch?v=nJzKi6oIvBA
+# Arike TODO
+MVP Approach - Something is better than nothing
+Focus on core functionality of application to work. Rest later
+
+## Use case Priority
+- [ ] Ability to add facilities
+- [ ] Add patients and record their information
+
+## High Priority
+- [ ] Add model family details
+- [ ] Add model disease
+- [ ] Add model patient disease
+- [ ] Add model visit Schedule
+- [ ] Add model visit details
+- [ ] Add model treatment
+- [ ] Add model treatment_notes
+
+## Medium Priority
+- [ ] Write test cases for models
+
+#### Low Priority
+- [ ] Design Index
+- [ ] Design Forms
+
+---
+##### Extra Learning
+- [Django Floating Labels](https://www.youtube.com/watch?v=nJzKi6oIvBA)
+
+---
+###### Extra Features
+- [ ] None for now!
+---
