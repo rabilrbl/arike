@@ -89,7 +89,7 @@ class Ward(BaseModel):
     local_body = models.ForeignKey(LocalBody, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
-    number = models.CharField()
+    number = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.name} ({self.number})"
