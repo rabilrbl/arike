@@ -5,10 +5,6 @@
 
 @layer components {
 
-    body {
-        @apply bg-gray-100 text-gray-800 container px-4;
-    }
-
     h1 {
         @apply text-4xl font-bold;
     }
@@ -30,7 +26,7 @@
     }
 
     h6 {
-        @apply text-md font-bold;
+        @apply font-bold;
     }
 
     p {
@@ -62,11 +58,7 @@
     }
 
     .btn {
-        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
-    }
-
-    .btn-primary {
-        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+        @apply bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded;
     }
 
     .btn-secondary {
@@ -102,84 +94,21 @@
         @apply space-y-5;
     }
 
-    .text-md {
-        @apply text-xl;
-    }
-
-    input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="search"], input[type="tel"], input[type="url"], input[type="week"], textarea {
-        @apply border-2 border-gray-300 rounded-lg py-2 px-4;
-    }
-
-    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="week"]:focus, textarea:focus {
-        @apply border-2 border-blue-500 rounded-lg py-2 px-4;
-    }
-
-    input[type="checkbox"], input[type="radio"] {
-        @apply border-2 border-gray-300 rounded-lg p-2 mr-2;
-    }
-
     .div_id_remember {
         @apply flex;
         @apply justify-between;
         @apply items-center;
     }
 
-    .navbar {
-        @apply flex;
-        @apply justify-between;
-        @apply items-center;
-        @apply p-4;
-        @apply bg-white;
-        @apply border-b-2 border-gray-300;
-    }
-
-    .navbar a {
-        @apply text-blue-500 hover:text-blue-700;
-    }
-
-    .navbar a:hover {
-        @apply text-blue-700;
-    }
-
-    .navbar a:active {
-        @apply text-blue-800;
-    }
-
-    .navbar a:focus {
-        @apply outline-none;
-    }
-
-    .navbar-brand {
-        @apply text-blue-500 hover:text-blue-700;
-    }
-
-    .navbar-brand:hover {
-        @apply text-blue-700;
-    }
-
-    .navbar-brand:active {
-        @apply text-blue-800;
-    }
-
-    .navbar-brand:focus {
-        @apply outline-none;
-    }
-
-    .navbar-expand-md {
-        @apply flex;
-        @apply justify-between;
-        @apply items-center;
-        @apply p-4;
-        @apply bg-white;
-        @apply border-b-2 border-gray-300;
-    }
-
     .container-fluid {
         @apply max-w-screen-lg;
     }
 
+    .btn-align-last {
+        @apply flex w-full justify-end;
+    }
 
-
+        
 
 
   }

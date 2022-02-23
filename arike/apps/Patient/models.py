@@ -8,7 +8,7 @@ from arike.apps.Facility.models import Facility
 
 class Patient(BaseModel):
     ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-    facility = models.ForeignKey(Facility, on_delete=models.PROTECT)
+    facility = models.ForeignKey(Facility, on_delete=models.PROTECT,  default="")
 
     full_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()

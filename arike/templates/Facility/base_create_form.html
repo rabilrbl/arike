@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{% block head %}Facility{% endblock %}</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="space-y-3 max-w-xl mt-10">
+            {% if form.errors %}
+                <div class="alert alert-danger">{{ form.errors }}</div>
+            {% endif %}
+            <div class="gap-4 flex flex-col">
+                <label for="name" class="text-2xl font-medium ">Kind</label>
+
+                <!-- Radio Button Choices -->
+                <div class="flex felx-row space-x-5 text-xl">
+                    <div class="flex items-center"><input type="radio" name="kind" value="1" class="h-6 w-6 caret-black focus:outline-none " checked> <span class="ml-2">PHC</span></div>
+                    <div class="flex items-center"><input type="radio" name="kind" value="2" class="h-6 w-6 caret-black focus:outline-none " {% if form.kind.value == 2 %}checked{% endif %} > <span class="ml-2">CHC</span></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="name">Name</label>
+                {{form.name}}
+            </div>
+
+            <div class="flex flex-col">
+                <label for="address">Address</label>
+                {{form.address}}
+            </div>
+            
+            <div class="flex flex-col">
+                <label for="address">Ward</label>
+                {{form.ward}}
+            </div>
+
+            <div class="flex flex-row space-x-5 w-full">
+                <div class="flex flex-col w-full">
+                    <label for="pincode">Pincode</label>
+                    {{form.pincode}}
+                </div>
+                
+                <div class="flex flex-col w-full">
+                    <label for="phone">Phone</label>
+                    {{form.phone}}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn mt-5 px-12 py-3 text-xl rounded-xl">{% block btn_name %}Submit{% endblock %}</button>
+    </form>
+{% endblock %}

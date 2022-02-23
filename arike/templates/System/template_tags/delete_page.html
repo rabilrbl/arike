@@ -1,0 +1,15 @@
+<div class="main space-y-3">
+    <h1>Delete {{ object.name }}</h1>
+    <p class="text-2xl">
+        {{ message }}
+        <br>
+        Are you sure? Action Cannot be reversed
+    </p>
+    <div>
+        <form action="" method="post" class="space-y-3">
+            {% csrf_token %}
+            <button class="btn btn-danger px-8 py-3 mr-5" type="submit">Delete</button>
+            <button class="btn btn-primary px-8 py-3" onclick="history.back()">Cancel</button>
+        </form>
+    </div>
+</div>

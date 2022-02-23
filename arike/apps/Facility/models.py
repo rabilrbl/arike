@@ -10,7 +10,7 @@ FACILITY_CHOICE = (
 
 # Create your models here.
 class Facility(BaseModel):
-    ward = models.ForeignKey(Ward, on_delete=models.CASCADE)
+    ward = models.ForeignKey(Ward, on_delete=models.CASCADE, null=True)
 
     kind = models.IntegerField(choices=FACILITY_CHOICE)
     name = models.CharField(max_length=255)

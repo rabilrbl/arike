@@ -13,8 +13,8 @@ class User(AbstractUser):
     If adding fields that need to be filled at user signup,
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
-    district = models.ForeignKey(District, on_delete=models.PROTECT)
-    facility = models.ForeignKey(Facility, on_delete=models.PROTECT)
+    district = models.ForeignKey(District, on_delete=models.PROTECT, default="")
+    facility = models.ForeignKey(Facility, on_delete=models.PROTECT, default="")
 
     #: First and last name do not cover name patterns around the globe
     full_name = models.CharField(_("Name of User"), blank=True, max_length=255)

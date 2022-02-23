@@ -1,3 +1,42 @@
 {% extends "base.html" %}
 
-Arike
+{% block content %}
+    <div id="main w-full max-w-4xl">
+        <!-- Search Bar -->
+        {% include "System/template_tags/search_bar.html" %}
+        <div class="mt-5 grid gap-4 md:grid-flow-col md:grid-cols-2 md:grid-rows-2 max-w-4xl">
+            {% with gridclass="border-2 flex space-x-2 border-gray-600 px-5 py-3 rounded-xl min-w-fit cursor-pointer hover:-translate-x-1 hover:-translate-y-1 hover:ease-in-out " %}
+                <div class="{{ gridclass }}">
+                    <div class="flex items-center w-[10rem]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Schedule</h3>
+                        <p>Lo
+                    rem ipsum dolor sit amet consec Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus, id? Adipisci sunt eligendi obcaecati, id minus archite..</p>
+                    </div>
+                </div>
+                <div class="{{ gridclass }}">
+                    <div>
+                        <h3>Manage Lsg</h3>
+                        <p>Lorem ipsum dolor sit amet consec Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus, id? Adipisci sunt eligendi obcaecati, id minus archite..</p>
+                    </div>
+                </div>
+                <div class="{{ gridclass }}">
+                    <div>
+                        <h3>Manage Facility</h3>
+                        <p>Lorem ipsum dolor sit amet consec Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus, id? Adipisci sunt eligendi obcaecati, id minus archite..</p>
+                    </div>
+                </div>
+                <div class="{{ gridclass }}">
+                    <div>
+                        <h3>Manage Staff</h3>
+                        <p>Lorem ipsum dolor sit amet consec Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus, id? Adipisci sunt eligendi obcaecati, id minus archite..</p>
+                    </div>
+                </div>
+            {% endwith %}
+        </div>
+    </div>
+{% endblock content %}

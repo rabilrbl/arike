@@ -197,6 +197,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "arike.users.context_processors.allauth_settings",
+                "arike.apps.System.context_processors.index_vars",
             ],
         },
     }
