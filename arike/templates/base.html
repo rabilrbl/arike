@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}arike{% endblock title %}</title>
+    <title>{% block title %}{% if title %}{{ title }}{% else %}arike{% endif %}{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content=""Arike" is a Malayalam word that roughly translates to "Alongside" or "Besides" in English. The project caters to a system of specialized medical staff tending to patients under palliative care.">
     <meta name="author" content="Mohammed Rabil">
@@ -28,53 +28,26 @@
 
   </head>
 
-  <body>
+  <body class="flex bg-gray-200">
 
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'home' %}">arike</a>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-              {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>
-                </li>
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-                </li>
-              {% else %}
-                {% if ACCOUNT_ALLOW_REGISTRATION %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
-              </li>
-              {% endif %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
-                </li>
-              {% endif %}
+    <div class="bg-emerald-500 min-h-screen w-96">
+      <div class="flex flex-row justify-center w-full">
+        <nav class="flex flex-col">
+          <h2 class="text-emerald-50 my-2 mb-5 text-center">Arike</h2>
+          {% with navclass="text-white py-2 text-center w-[12rem] rounded mb-2 w-full border rounded-xl hover:bg-emerald-600 shadow-lg" %}
+            <ul>
+              {% for item, navlink in navitems.items %}
+              <a href="{{navlink}}">
+                <li class="{{ navclass }}">{{ item }}</li>
+              </a>
+              {% endfor %}
             </ul>
-          </div>
-        </div>
-      </nav>
-
+          {% endwith %}
+        </nav>
+      </div>
     </div>
 
-    <div class="container">
+    <div class="container px-8 py-4">
 
       {% if messages %}
         {% for message in messages %}
@@ -85,9 +58,11 @@
         {% endfor %}
       {% endif %}
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
+      <div class="">
+        {% block content %}
+          <p>Use this document as a way to quick start any new project.</p>
+        {% endblock content %}
+      </div>
 
     </div> <!-- /container -->
 
