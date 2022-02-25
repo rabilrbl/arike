@@ -46,7 +46,7 @@ class CreateFacilityForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
-        self.fields['address'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl', 'rows': '3'})
+        self.fields['address'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl', 'rows': '2'})
         self.fields['ward'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
         self.fields['pincode'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
         self.fields['phone'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})

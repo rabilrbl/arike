@@ -32,17 +32,36 @@
 
     <div class="bg-emerald-500 min-h-screen w-96">
       <div class="flex flex-row justify-center w-full">
-        <nav class="flex flex-col">
-          <h2 class="text-emerald-50 my-2 mb-5 text-center">Arike</h2>
-          {% with navclass="text-white py-2 text-center w-[12rem] rounded mb-2 w-full border rounded-xl hover:bg-emerald-600 shadow-lg" %}
-            <ul>
-              {% for item, navlink in navitems.items %}
-              <a href="{{navlink}}">
-                <li class="{{ navclass }}">{{ item }}</li>
-              </a>
-              {% endfor %}
-            </ul>
-          {% endwith %}
+        <nav class="flex flex-col divide-y-2">
+          <div>
+            <h2 class="text-emerald-50 my-2 mb-5 text-center">Arike</h2>
+            {% with navclass="text-white py-2 text-center w-[12rem] rounded mb-2 w-full border rounded-xl hover:bg-emerald-600 shadow-lg" %}
+              <ul>
+                {% for item, navlink in navitems.items %}
+                <a href="{{navlink}}">
+                  <li class="{{ navclass }}">{{ item }}</li>
+                </a>
+                {% endfor %}
+              </ul>
+            {% endwith %}
+          </div>
+          <div class="absolute bottom-0 mb-6">
+            {% if request.user.is_authenticated %}
+            <!-- Display user name and email -->
+            <div class="flex flex-row mt-2">
+              <div class="flex items-center">
+                <div class="py-6 px-6 rounded-full border bg-gray-400 mr-2"></div>
+              </div>
+              <div class="">
+                <p onclick="document.location.href='{% url 'users:detail' request.user.external_id %}'" class="text-white text-center cursor-pointer hover:underline">{{ request.user.full_name }}</p>
+                <p class="text-white text-center">{{ request.user.email }}</p>
+                <a href="{% url 'account_logout' %}" class="text-white text-center w-full rounded-xl hover:underline">Logout</a>
+              {% else %}
+                <a href="{% url 'account_login' %}" class="text-white text-center w-full rounded-xl hover:underline">Login</a>
+              {% endif %}
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
     </div>
@@ -74,6 +93,7 @@
     with a "defer" so that you run inline code:
     <script>
       window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
+      document.querySelector('div.pointer-events-none.absolute.inset-y-0.right-0.flex.items-center.px-2.text-gray-700').style.display = 'none';
     </script>
     {% endcomment %}
     {% endblock inline_javascript %}

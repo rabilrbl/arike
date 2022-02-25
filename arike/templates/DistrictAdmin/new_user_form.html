@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container max-w-3xl">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="heading">{% block heading %}User{% endblock %}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for error in form.errors %}
+                    <div class="">{{ form.non_field_errors }}</div>
+                {% endfor %}
+                {{ form|crispy }}
+                    <div class="flex space-x-5 mt-5">
+                        <button type="submit" class="btn btn-primary px-8">{% block btn_text %}Submit{% endblock %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -18,6 +18,7 @@ urlpatterns = [
     # User management
     path("users/", include("arike.users.urls", namespace="users")),
     path("facility/" , include("arike.apps.Facility.urls", namespace="facility")),
+    path("distadmin/" , include("arike.apps.DistrictAdmin.urls", namespace="distadmin")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

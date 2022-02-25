@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block content%}
+    {% include "System/template_tags/delete_page.html" with name=user.full_name message="User will be deleted." %}
+{% endblock %}

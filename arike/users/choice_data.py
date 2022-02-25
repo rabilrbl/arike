@@ -1,7 +1,8 @@
-UserRoles = (
-    ("da", "Superuser"),
-    ("pn", "Primary Nurse"),
-    ("an", "Secondary Nurse"),
+UserRole = (
+    # (1, "District Admin"),
+    (2, "Doctor"),
+    (3, "Primary Nurse"),
+    (4, "Secondary Nurse"),
 )
 
 GENDER = (

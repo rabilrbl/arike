@@ -4,6 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView
+from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
@@ -11,8 +12,8 @@ User = get_user_model()
 class UserDetailView(LoginRequiredMixin, DetailView):
 
     model = User
-    slug_field = "username"
-    slug_url_kwarg = "username"
+    slug_field = "external_id"
+    slug_url_kwarg = "external_id"
 
 
 user_detail_view = UserDetailView.as_view()
@@ -21,12 +22,13 @@ user_detail_view = UserDetailView.as_view()
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     model = User
-    fields = ["name"]
+    fields = ["full_name"]
     success_message = _("Information successfully updated")
 
     def get_success_url(self):
         assert (
-            self.request.user.is_authenticated
+            self.request.user.is_authenticated,
+            self.request.user.is_verified
         )  # for mypy to know that the user is authenticated
         return self.request.user.get_absolute_url()
 
@@ -42,7 +44,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        return reverse("users:detail", kwargs={"username": self.request.user.username})
+        return reverse("users:detail", kwargs={"external_id": self.request.user.external_id})
 
 
 user_redirect_view = UserRedirectView.as_view()

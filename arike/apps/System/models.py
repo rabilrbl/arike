@@ -4,17 +4,13 @@ from uuid import uuid4
 # CHOICES
 # Reference https://github.com/coronasafe/care/blob/master/care/users/models.py#L61
 LOCAL_BODY_CHOICES = (
-    # Panchayath levels
     (1, "Grama Panchayath"),
     (2, "Block Panchayath"),
     (3, "District Panchayath"),
     (4, "Nagar Panchayath"),
-    # Municipality levels
-    (10, "Municipality"),
-    # Corporation levels
-    (20, "Corporation"),
-    # Unknown
-    (50, "Others"),
+    (5, "Municipality"),
+    (6, "Corporation"),
+    (7, "Others"),
 )
 
 class BaseManager(models.Manager):
@@ -42,11 +38,14 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
 
-    objects = BaseManager()
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         self.deleted = True
         self.save()
+
+    objects = BaseManager()
 
     def hard_delete(self, *args, **kwargs):
         super(BaseModel, self).delete(*args, **kwargs)
@@ -79,8 +78,11 @@ class LocalBody(BaseModel):
     district  = models.ForeignKey(District, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
-    kind = models.IntegerField(choices=LOCAL_BODY_CHOICES)
+    kind = models.IntegerField(choices=LOCAL_BODY_CHOICES, default=7)
     local_body_code = models.CharField(max_length=20, blank=True, null=True)
+
+    def get_kind(self):
+        return LOCAL_BODY_CHOICES[self.kind][1]
 
     def __str__(self):
         return f"{self.name} ({self.kind})"

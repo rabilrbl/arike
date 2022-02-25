@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+    
+    {% block content %} 
+        <div class="max-w-3xl space-y-5">
+            <div class="flex">
+                <h1>{{ user.full_name|truncatechars:25 }}</h1>
+                <div class="ml-auto order-last">
+                    <button class="btn btn-primary px-8" onclick="window.location.href='{% url 'distadmin:update' user.id %}'">Edit</button>
+                    <button class="btn btn-danger px-8" onclick="window.location.href='{% url 'distadmin:delete' user.id %}'">Delete</button>
+                </div>
+            </div>
+            <div class="gap-4 flex flex-col">
+
+                <div class="flex flex-col">
+                    <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                        <label class="text-sm text-gray-800" for="name">Full Name</label>
+                        {{ user.full_name }}
+                    </article>
+                </div>
+                <div class="flex flex-col">
+                    <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                        <label class="text-sm text-gray-800" for="name">Email</label>
+                        {{ user.email }}
+                    </article>
+                </div>
+                <!-- <div class="flex flex-col">
+                    <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                        <label class="text-sm text-gray-800" for="name">Phone</label>
+                        {{ user.phone }}
+                    </article>
+                </div> -->
+                <div class="flex flex-row space-x-5">
+                    <div class="flex flex-col w-full">
+                        <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                            <label class="text-sm text-gray-800" for="name">Facility</label>
+                            {{ user.facility }}
+                        </article>
+                    </div>
+                    <div class="flex flex-col w-full">
+                        <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                            <label class="text-sm text-gray-800" for="name">Role</label>
+                            {{ user.get_role_display }}
+                        </article>
+                    </div>
+                </div>
+              </div>
+        </div>
+    {% endblock %}

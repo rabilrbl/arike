@@ -17,3 +17,6 @@ class Facility(BaseModel):
     address = models.TextField(blank=True)
     pincode = models.CharField(max_length=6)
     phone = models.CharField(max_length=11)
+
+    def __str__(self):
+        return f"{self.name} ({self.get_kind_display()})"

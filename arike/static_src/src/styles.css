@@ -108,7 +108,64 @@
         @apply flex w-full justify-end;
     }
 
-        
+    .alert {
+        @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-success {
+        @apply bg-green-500 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-danger {
+        @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-warning {
+        @apply bg-yellow-500 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-info {
+        @apply bg-teal-500 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-light {
+        @apply bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded;
+    }
+
+    .alert-dark {
+        @apply bg-gray-800 text-white font-bold py-2 px-4 rounded;
+    }
+
+    .alert-dismissible {
+        @apply cursor-pointer;
+    }
+
+    .alert-dismissible:hover {
+        @apply text-blue-500;
+    }
+
+    .alert-dismissible:active {
+        @apply text-blue-700;
+    }
+
+    .alert-dismissible:focus {
+        @apply outline-none;
+    }
+
+    .form-control {
+        @apply border-2 border-gray-200 rounded-lg py-2 px-4;
+    }
+
+    .form-control:focus {
+        @apply outline-none;
+    }
+
+    .form-group {
+        @apply flex;
+        @apply flex-col;
+        @apply space-y-2;
+    }
+
 
 
   }

@@ -4,25 +4,37 @@
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container space-y-5 max-w-3xl">
 
-  <div class="row">
-    <div class="col-sm-12">
+  <div class="row space-y-5">
+    <div class="col-sm-12 space-y-5">
+      <h1 id="heading">{{ object.full_name }}</h1>
+      <span class="text-xl text-gray-700 font-semibold">You are a {{ user.get_role_display }}</span>
+      <div class="gap-4 flex flex-col">
 
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
+        <div class="flex flex-col">
+            <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                <label class="text-sm text-gray-800" for="name">Full Name</label>
+                {{ user.full_name }}
+            </article>
+        </div>
+        <div class="flex flex-col">
+            <article class="bg-gray-50 border border-gray-500  px-6 py-2 flex flex-col rounded-xl text-2xl">
+                <label class="text-sm text-gray-800" for="name">Email</label>
+                {{ user.email }}
+            </article>
+        </div>
+      </div>
     </div>
   </div>
 
 {% if object == request.user %}
 <!-- Action buttons -->
-<div class="row">
+<div class="row space-y-5">
 
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+  <div class="space-x-5">
+    <button class="btn btn-primary" onclick="document.location.href='{% url 'users:update' %}'" role="button">My Info</button>
+    <button class="btn btn-primary" onclick="document.location.href='{% url 'account_email' %}'" role="button">E-Mail</button>
     <!-- Your Stuff: Custom user template urls -->
   </div>
 
