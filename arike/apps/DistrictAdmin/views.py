@@ -1,5 +1,3 @@
-# Models
-from arike.apps.Facility.models import Facility
 
 # import GenericViews
 from django.views.generic.list import ListView

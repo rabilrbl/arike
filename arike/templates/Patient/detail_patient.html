@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="space-y-5 max-w-3xl">
+        <h1>{{ patient.full_name }}</h1>
+        <div class="flex items-center">
+            <h2>Personal Information</h2>
+            {% url 'patient:update' patient.id as patient_edit %}
+            <button class="btn ml-auto order-last px-8" onclick="document.location.href='{{ patient_edit }}'">Edit</button>
+        </div>
+            <div class="bg-gray-50 px-6 py-3 rounded-xl space-y-3">
+                <h3>{{ patient.full_name }}</h3>
+                <p>{{ patient.address }}</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {% with labelClass="text-gray-800 text-lg font-bold" %}
+                        <div class="flex flex-col">
+                            <label class="{{ labelClass }}">Phone Number:</label>
+                            <span class="">+91-{{ patient.phone }}</span>
+                        </div>
+                        <div class="flex flex-col ">
+                            <label class="{{ labelClass }}">Emergency Phone Number:</label>
+                            <span class="">+91-{{ patient.emergency_phone_number }}</span>
+                        </div>
+                        <div class="flex flex-col ">
+                            <label class="{{ labelClass }}">Gender</label>
+                            <span class="">{{ patient.get_gender_display }}</span>
+                        </div>
+                        <div class="flex flex-col ">
+                            <label class="{{ labelClass }}">Facility</label>
+                            <span class="">{{ patient.facility.name }}, {{ patient.facility.ward.local_body.district }}</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="{{ labelClass }}">Next Visit</label>
+                            <span class="">2nd March 2021 @ 2pm</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="{{ labelClass }}">Last Visit</label>
+                            <span class="">1st March 2021 @ 1pm</span>
+                        </div>
+                    {% endwith %}
+                </div>
+            </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+            {% with gridClass="bg-gray-50 px-6 py-12 text-center rounded-xl hover:bg-gray-700 hover:text-gray-50 cursor-pointer transition duration-200 ease-in-out" %}
+                <div class="{{ gridClass }}"><h2>Visits</h2></div>
+                <div class="{{ gridClass }}"><h2>Treatments</h2></div>
+                <div class="{{ gridClass }}"><h2>Family Details</h2></div>
+                <div class="{{ gridClass }}"><h2>Disease History</h2></div>
+            {% endwith %}
+        </div>
+    </div>
+{% endblock %}

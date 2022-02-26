@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+    <div class="container max-w-4xl">
+        {% url 'patient:add' as patient_add %}
+        {% include "System/template_tags/head_search.html" with title="Patients" btn_link=patient_add %}
+        {% include "System/template_tags/search_bar.html" %}
+        <div class="mt-5 grid gap-4 md:grid-cols-2 md:grid-rows-2 max-w-4xl">
+            {%with className="group bg-gray-50 space-y-5 border-2 border-gray-600 px-6 py-3 rounded-xl cursor-pointer hover:bg-gray-700 hover:text-gray-50 shadow-lg transition duration-300 ease-in-out" %}
+                {% for patient in patients %}
+                {% url 'patient:view' patient.id as patient_edit %}
+                <div class="{{className}}" onclick="document.location.href='{{patient_edit}}'">
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <h3>{{patient.full_name}}</h3>
+                            <span class="ml-auto order-last bg-gray-300 px-4 py-1 rounded-full text-sm group-hover:border group-hover:border-gray-50 group-hover:bg-black">{{ patient.get_gender_display }}</span>
+                        </div>
+                        <p>{{ patient.address }}</p>
+                        <p class="font-semibold text-xl">{{ patient.pincode }}</p>
+                        <span class="font-bold">{{patient.calculate_age}} Years old</span>
+                    </div>
+                    <div class="flex flex-row items-center">
+                        <span class="text-blue-500">+91-{{patient.phone}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {%endwith%}
+        </div>
+    </div>
+    {% endblock %}

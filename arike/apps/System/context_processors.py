@@ -9,7 +9,7 @@ def index_vars(request):
             "Users": reverse("distadmin:users"),
             "Facility": reverse("facility:index"),
             "Agenda": "#",
-            "Patient": "#",
+            "Patient": reverse("patient:patients"),
         },
         
         }
