@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="form max-w-3xl space-y-5">
+        <h1>{% block heading %}Family Details{% endblock %}</h1>
+        <form class="space-y-3" action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">{% block btn_text %}Submit{% endblock %}</button>
+        </form>
+    </div>
+{% endblock %}

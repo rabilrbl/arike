@@ -42,10 +42,10 @@
             </div>
         <div class="grid gap-4 sm:grid-cols-2">
             {% with gridClass="bg-gray-50 px-6 py-12 text-center rounded-xl hover:bg-gray-700 hover:text-gray-50 cursor-pointer transition duration-200 ease-in-out" %}
-                <div class="{{ gridClass }}"><h2>Visits</h2></div>
-                <div class="{{ gridClass }}"><h2>Treatments</h2></div>
-                <div class="{{ gridClass }}"><h2>Family Details</h2></div>
-                <div class="{{ gridClass }}"><h2>Disease History</h2></div>
+                <div onclick="document.location.href='visits/'" class="{{ gridClass }}"><h2>Visits</h2></div>
+                <div onclick="document.location.href='treatment/'" class="{{ gridClass }}"><h2>Treatments</h2></div>
+                <div onclick="document.location.href='family/'" class="{{ gridClass }}"><h2>Family Details</h2></div>
+                <div onclick="document.location.href='disease/'" class="{{ gridClass }}"><h2>Disease History</h2></div>
             {% endwith %}
         </div>
     </div>

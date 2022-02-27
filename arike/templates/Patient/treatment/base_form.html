@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="space-y-3 max-w-3xl">
+        <h1>{% block heading %}Treatment{% endblock %}</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">{% block btn_text %}Submit{%endblock%}</button>
+        </form>
+    </div>
+{% endblock %}

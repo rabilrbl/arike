@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="max-w-4xl space-y-5">
+        {% include "System/template_tags/head_search.html" with btn_link="create/" %}
+        <div class="">
+            <h2>{{ patient.full_name }}</h2>
+            <p>{{ patient.address }}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            {% block patient %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -38,7 +38,7 @@
               <ul>
                 {% for item, navlink in navitems.items %}
                 <a href="{{navlink}}">
-                  <li class="{{ navclass }}">{{ item }}</li>
+                  <li class="{{ navclass }} {% if navlink in request.path and item != 'Home' %} bg-emerald-700 {%endif%}">{{ item }}</li>
                 </a>
                 {% endfor %}
               </ul>

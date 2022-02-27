@@ -9,6 +9,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import ModelForm
 from django.urls import reverse_lazy
+from arike.apps.Facility.filters import FacilityFilter
 
 # Create your views here.
 
@@ -20,12 +21,20 @@ class IndexViewFacilities(ListView):
     template_name = 'Facility/facilities.html'
     context_object_name = "facilities"
 
+    def filter_queryset(self, queryset):
+        self.myFilter = FacilityFilter(self.request.GET, queryset=queryset)
+        return self.myFilter.qs
+
     def get_queryset(self):
-        return Facility.objects.all()
+        queryset = Facility.objects.all()
+        queryset = self.filter_queryset(queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Facilities'
+        context['sfield'] = "name"
+        context['myfilter'] = self.myFilter
         return context
 
 

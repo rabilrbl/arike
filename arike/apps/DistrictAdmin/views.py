@@ -1,11 +1,13 @@
 
 # import GenericViews
+from urllib import request
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
+from arike.apps.DistrictAdmin.filters import UserFilter
 
 
 User = get_user_model()
@@ -18,12 +20,20 @@ class UserIndexView(ListView):
     template_name = 'DistrictAdmin/users.html'
     context_object_name = "users"
 
+    def filter_queryset(self, queryset):
+        self.myFilter = UserFilter(self.request.GET, queryset=queryset)
+        return self.myFilter.qs
+
     def get_queryset(self):
-        return User.objects.filter(role__range=(3, 4), deleted=False)
+        queryset = User.objects.all()
+        queryset = self.filter_queryset(queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Users'
+        context['sfield'] = "full_name"
+        context['myfilter'] = self.myFilter
         return context
 
 class NewUserForm(ModelForm):

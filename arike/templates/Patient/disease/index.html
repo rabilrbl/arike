@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="max-w-4xl space-y-5">
+        {% include "System/template_tags/head_search.html" with btn_link="create/" %}
+        <div class="">
+            <h2>{{ patient.full_name }}</h2>
+            <p>{{ patient.address }}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            {% for dis in diseases %}
+            <div class="p-6 space-y-3 bg-gray-50 rounded-xl">
+                <div class="flex items-center">
+                    <h3>{{ dis.disease.name|truncatechars:25 }}</h3>
+                </div>
+                <p>{{ dis.created_at|date:"d M Y" }}</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-gray-900 font-medium text-lg">Investigated by</label>
+                        <p>{{ dis.user.full_name }}</p>
+                    </div>
+                    <div>
+                        <label class="text-gray-900 font-medium text-lg">ICDS Code</label>
+                        <p>{{ dis.disease.icds_code }}</p>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="text-gray-900 font-medium text-lg">Notes</label>
+                        <p>{{ dis.note }}</p>
+                    </div>
+                </div>
+                <!-- Delete and Edit button -->
+                <div class="flex justify-start space-x-3">
+                    <button class="bg-gray-50 hover:bg-gray-600 border border-gray-800 hover:text-white font-bold py-2 px-4 rounded-lg"
+                        onclick="document.location.href='delete/{{ dis.id }}'">
+                        Delete
+                    </button>
+                    <button class="bg-gray-800 hover:bg-gray-600 text-white  font-bold py-2 px-4 rounded-lg"
+                        onclick="document.location.href='update/{{ dis.id }}'">
+                        Edit
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

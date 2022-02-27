@@ -24,3 +24,4 @@ django-cors-headers==3.11.0 # https://github.com/adamchainz/django-cors-headers
 drf-spectacular==0.21.2
 # Django tailwind
 django_tailwind==3.1.1
+django_filter

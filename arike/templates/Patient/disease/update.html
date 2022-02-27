@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="max-w-3xl space-y-3">
+        <h1>Edit Disease History</h1>
+        <form class="space-y-3" action="" method="post">
+            {% csrf_token %}
+            {{form|crispy}}
+            <div id="div_id_note" class="mb-3"> 
+                <label for="id_note" class="block text-gray-700 text-sm font-bold mb-2">
+                    Note
+                </label> 
+                <textarea name="note" rows="3" class="textinput block border-gray-300 appearance-none border py-2 text-gray-700 focus:outline-none px-4 leading-normal w-full bg-white rounded-lg" id="id_note" >{{ note }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+
+{% endblock %}

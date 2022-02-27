@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from arike.apps.Patient.models import Patient
 from arike.users import choice_data as choices
 from django.contrib.admin import widgets
+from arike.apps.Patient.filters import PatientFilter
 
 
 class PatientIndexView(ListView):
@@ -19,12 +20,20 @@ class PatientIndexView(ListView):
     template_name = 'Patient/patients.html'
     context_object_name = "patients"
 
+    def filter_queryset(self, queryset):
+        self.myFilter = PatientFilter(self.request.GET, queryset=queryset)
+        return self.myFilter.qs
+
     def get_queryset(self):
-        return Patient.objects.filter(deleted=False)
+        queryset = Patient.objects.all()
+        queryset = self.filter_queryset(queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Patients'
+        context['sfield'] = "full_name"
+        context['myfilter'] = self.myFilter
         return context
 
 

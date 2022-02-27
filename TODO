@@ -1,26 +1,18 @@
 # Arike TODO
 MVP Approach - Something is better than nothing
-Focus on core functionality of application to work. Rest later
+Focus on the core functionality of the application to work. Rest later
 
 ## Use case Priority
-- [ ] Ability to add facilities
-- [ ] Add patients and record their information
+- [ ] Authorization 
 
 ## High Priority
-- [ ] Add model family details
-- [ ] Add model disease
-- [ ] Add model patient disease
-- [ ] Add model visit Schedule
-- [ ] Add model visit details
-- [ ] Add model treatment
-- [ ] Add model treatment_notes
+- [ ] Schedules page
 
 ## Medium Priority
-- [ ] Write test cases for models
+- [ ] Celery tasks
 
 #### Low Priority
-- [ ] Design Index
-- [ ] Design Forms
+- [ ] Form Design
 
 ---
 ##### Extra Learning

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+    
+    {% block content %}
+        <div class="space-y-5 max-w-3xl">
+            <h1>Visit History</h1>
+            <div class="">
+                <h2>{{ patient.full_name }}</h2>
+                <p>{{ patient.address }}</p>
+            </div>
+    
+            <div class="health_info bg-gray-50 p-6 rounded-xl space-y-5">
+                <h2>Health Information</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <h4>Palliative phase</h4>
+                        {{ visit.palliative_phase }}
+                    </div>
+                    <div>
+                        <h4>Blood Pressure</h4>
+                        {{ visit.blood_pressure }}
+                    </div>
+                    <div>
+                        <h4>Pulse</h4>
+                        {{ visit.pulse }}
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h4>Personal Hygiene</h4>
+                        {{ visit.personal_hygiene }}
+                    </div>
+                    <div>
+                        <h4>Mouth Hygiene</h4>
+                        {{ visit.mouth_hygiene }}
+                    </div>
+                    <div>
+                        <h4>Public Hygiene</h4>
+                        {{ visit.public_hygiene }}
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl space-y-5">
+                <h2>Notes</h2>
+                <h5 class="text-gray-400">by {{ visit.visit_schedule.user.full_name }}</h5>
+                <div>
+                    <p>{{ visit.note }}</p>
+                </div>
+            </div>
+        </div>
+    
+    {% endblock %}

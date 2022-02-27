@@ -46,6 +46,15 @@ RELATION = (
     (9, 'Other'),
 )
 
+EDUCATION = (
+    (1, 'School'),
+    (2, 'College'),
+    (3, 'Graduate'),
+    (4, 'Post Graduate'),
+    (5, 'Doctorate'),
+    (6, 'Other'),
+)
+
 ICDS_CODE = (
     ("D-32","DM"),
     ("HT-58","Hypertension"),
@@ -64,9 +73,9 @@ class FamilyDetail(BaseModel):
     phone = models.CharField(max_length=11)
     date_of_birth = models.DateField()
     email = models.EmailField(blank=True, null=True)
-    relation = models.IntegerField(choices=RELATION, default=RELATION[0][0])
+    relation = models.IntegerField(choices=RELATION, default=RELATION[8][0])
     address = models.TextField()
-    education = models.CharField(max_length=255, blank=True, null=True)
+    education = models.IntegerField(choices=EDUCATION, default=EDUCATION[5][0])
     occupation = models.CharField(max_length=255, blank=True, null=True)
     remarks = models.TextField(blank=True, null=True)
     is_primary = models.BooleanField(default=False)
@@ -77,7 +86,7 @@ class FamilyDetail(BaseModel):
 
 class Disease(BaseModel):
     name = models.CharField(max_length=255)
-    icd_code = models.CharField(max_length=255)
+    icds_code = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
@@ -86,6 +95,7 @@ class Disease(BaseModel):
 class PatientDisease(BaseModel):
     patient = models.ForeignKey(Patient, on_delete=models.PROTECT)
     disease = models.ForeignKey(Disease, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -134,10 +144,11 @@ class VisitDetail(BaseModel):
 
 class Treatment(BaseModel):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
 
-    description = models.CharField(max_length=255)
-    care_type = models.CharField(max_length=255)
-    care_sub_type = models.CharField(max_length=255)
+    description = models.TextField()
+    care_type = models.CharField(max_length=255, blank=True, null=True)
+    care_sub_type = models.CharField(max_length=255, blank=True, null=True) 
 
     def __str__(self):
         return self.patient.full_name + " - " + self.care_type
