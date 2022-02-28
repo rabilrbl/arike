@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block title %}{% if title %}{{ title }}{% else %}arike{% endif %}{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=""Arike" is a Malayalam word that roughly translates to "Alongside" or "Besides" in English. The project caters to a system of specialized medical staff tending to patients under palliative care.">
+    <meta name="description" content="'Arike' is a Malayalam word that roughly translates to 'Alongside' or 'Besides' in English. The project caters to a system of specialized medical staff tending to patients under palliative care.">
     <meta name="author" content="Mohammed Rabil">
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
@@ -29,7 +29,7 @@
   </head>
 
   <body class="flex bg-gray-200">
-
+    {% if request.user.is_authenticated %}
     <div class="bg-emerald-500 min-h-screen w-96">
         <nav class="flex flex-col w-full items-center">
           <div class="w-[90%]">
@@ -52,7 +52,7 @@
                 <div class="py-6 px-6 rounded-full border bg-gray-400 mr-2"></div>
               </div>
               <div class="flex flex-col justify-center">
-                <p onclick="document.location.href='{% url 'users:detail' request.user.external_id %}'" class="text-white text-center cursor-pointer hover:underline">{{ request.user.full_name }}</p>
+                <p onclick="document.location.href='{% url 'users:detail' request.user.external_id %}' class="text-white text-center cursor-pointer hover:underline">{{ request.user.full_name }}</p>
                 <p class="text-white text-center">{{ request.user.email }}</p>
                 <a href="{% url 'account_logout' %}" class="text-emerald-900 font-medium text-center w-full rounded-xl hover:underline">Logout</a>
               {% else %}
@@ -63,12 +63,13 @@
           </div>
         </nav>
     </div>
+    {% endif %}
 
     <div class="container px-8 py-4">
 
       {% if messages %}
         {% for message in messages %}
-        <div id="notif_message" class="alert py-3 px-3 flex items-center max-w-3xl m-3">
+        <div id="notif_message" class="{% if not request.user.is_authenticated %} absolute {% endif %} alert py-3 px-3 flex items-center max-w-3xl m-3">
           <button onclick="document.getElementById('notif_message').classList.toggle('hidden')" type="button" class="ml-auto order-last" data-bs-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg></button>
@@ -76,6 +77,12 @@
           <div class="">{{ message }}</div>
         </div>
         {% endfor %}
+        <script>
+          // Hide all messages after 3 seconds
+          setTimeout(function() {
+            document.getElementById('notif_message').classList.toggle('hidden');
+          }, 3000);
+        </script>
       {% endif %}
 
       <div class="">

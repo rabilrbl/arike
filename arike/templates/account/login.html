@@ -1,59 +1,29 @@
-{% extends "account/base.html" %}
-
-{% load i18n %}
-{% load account socialaccount %}
-{% load crispy_forms_tags %}
-
-{% block head_title %}{% translate "Sign In" %}{% endblock %}
-
-{% block inner %}
-
-<h1>{% translate "Sign In" %}</h1>
-
-{% get_providers as socialaccount_providers %}
-
-{% if socialaccount_providers %}
-  <p>
-    {% translate "Please sign in with one of your existing third party accounts:" %}
-    {% if ACCOUNT_ALLOW_REGISTRATION %}
-      {% blocktranslate trimmed %}
-        Or, <a href="{{ signup_url }}">sign up</a>
-        for a {{ site_name }} account and sign in below:
-      {% endblocktranslate %}
-    {% endif %}
-  </p>
-
-  <div class="socialaccount_ballot">
-
-    <ul class="socialaccount_providers">
-      {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-    </ul>
-
-    <div class="login-or">{% translate "or" %}</div>
-
+{% extends "base.html" %}
+{% block content %}
+  <div class="flex flex-row m-auto h-[96vh] w-full">
+      <div class="w-1/2">
+          <div class="text-white text-center space-y-2 grid place-content-center place-items-center h-full">
+            <h1 class="text-6xl">Arike</h1>
+            <p>"Arike" is a Malayalam word that roughly translates to "Alongside" or "Besides" in English. The project caters to a system of specialized medical staff tending to patients under palliative care.</p>
+          </div>
+      </div>
+      <div class="w-1/2 h-full grid place-content-center space-y-3 m-auto bg-gray-200 rounded-xl">
+        {% load i18n %}
+        {% load account socialaccount %}
+        {% load crispy_forms_tags %}
+            <h1>Authorized Login</h1>
+        <form class="login" class="" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{form|crispy}} 
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class="primaryAction btn btn-primary px-8 py-3 w-full" type="submit">{% translate "Login" %}</button>
+        </form>
+        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
+      </div>
   </div>
-
-  {% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-  {% if ACCOUNT_ALLOW_REGISTRATION %}
-    <p>
-      {% blocktranslate trimmed %}
-        If you have not created an account yet, then please
-        <a href="{{ signup_url }}">sign up</a> first.
-      {% endblocktranslate %}
-    </p>
-  {% endif %}
-{% endif %}
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
-  <button class="primaryAction btn btn-primary" type="submit">{% translate "Sign In" %}</button>
-</form>
-
+  <script>
+    document.querySelector('body').classList.add('bg-emerald-500');
+  </script>
 {% endblock %}
