@@ -10,6 +10,7 @@ def index_vars(request):
             "Facility": reverse("facility:index"),
             "Agenda": "#",
             "Patient": reverse("patient:patients"),
+            "Schedule": reverse("nurse:schedule"),
         },
         
         }

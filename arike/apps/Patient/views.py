@@ -11,14 +11,17 @@ from arike.apps.Patient.models import Patient
 from arike.users import choice_data as choices
 from django.contrib.admin import widgets
 from arike.apps.Patient.filters import PatientFilter
+# from arike.users.mixins import RoleRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
-
-class PatientIndexView(ListView):
+class PatientIndexView(PermissionRequiredMixin, ListView):
     """
     Patient list page
     """
     template_name = 'Patient/patients.html'
     context_object_name = "patients"
+
+    permission_required = 'Patient.view_patient'
 
     def filter_queryset(self, queryset):
         self.myFilter = PatientFilter(self.request.GET, queryset=queryset)
@@ -37,12 +40,15 @@ class PatientIndexView(ListView):
         return context
 
 
-class PatientDetailView(DetailView):
+class PatientDetailView(PermissionRequiredMixin,DetailView):
     """
     Patient detail page
     """
+
     model = Patient
     template_name = 'Patient/detail_patient.html'
+
+    permission_required = 'Patient.view_patient'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -88,10 +94,12 @@ class PatientForm(ModelForm):
         fields = ['full_name','date_of_birth','address','landmark','ward', 'facility','phone','emergency_phone_number','gender']
 
 
-class CreatePatient(CreateView):
+class CreatePatient(PermissionRequiredMixin,CreateView):
     form_class = PatientForm
     template_name = 'Patient/create_patient.html'
     success_url = reverse_lazy('patient:patients')
+
+    permission_required = 'Patient.add_patient'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,11 +107,13 @@ class CreatePatient(CreateView):
         return context
 
 
-class UpdatePatient(UpdateView):
+class UpdatePatient(PermissionRequiredMixin,UpdateView):
     model = Patient
     form_class = PatientForm
     template_name = 'Patient/update_patient.html'
     success_url = reverse_lazy('patient:patients')
+
+    permission_required = 'Patient.change_patient'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -111,10 +121,12 @@ class UpdatePatient(UpdateView):
         return context
 
 
-class DeletePatient(DeleteView):
+class DeletePatient(PermissionRequiredMixin,DeleteView):
     model = Patient
     template_name = 'Patient/delete_patient.html'
     success_url = reverse_lazy('patient:patients')
+
+    permission_required = 'Patient.delete_patient'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

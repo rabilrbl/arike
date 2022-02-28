@@ -120,17 +120,33 @@ class Symptoms(BaseModel):
     def __str__(self):
         return self.name
 
+
+PALLIATIVE_PHASE = (
+    (1,"Stable"),
+    (2,"Unstable"),
+    (3,"Deteriorating"),
+    (4,"Dying"),
+)
+
+SYSTEMIC_EXAMINATION = (
+    (1,"Cardiovascular"),
+    (2,"Gastrointestinal"),
+    (3,"Central nervous system"),
+    (4,"Respiratory"),
+    (5,"Genital-urinary"),
+)
+
 class VisitDetail(BaseModel):
     visit_schedule = models.ForeignKey(VisitSchedule, on_delete=models.PROTECT)
 
-    palliative_phase = models.CharField(max_length=255, blank=True, null=True)
+    palliative_phase = models.IntegerField(choices=PALLIATIVE_PHASE, default=PALLIATIVE_PHASE[0][0])
     blood_pressure = models.IntegerField(blank=True, null=True)
     pulse = models.IntegerField(blank=True, null=True)
     general_random_blood_pressure = models.IntegerField(blank=True, null=True)
     personal_hygiene = models.CharField(max_length=255, blank=True, null=True)
     mouth_hygiene = models.CharField(max_length=255, blank=True, null=True)
     public_hygiene = models.CharField(max_length=255, blank=True, null=True)
-    systemic_examination = models.CharField(max_length=255, blank=True, null=True)
+    systemic_examination = models.IntegerField(choices=SYSTEMIC_EXAMINATION, default=SYSTEMIC_EXAMINATION[0][0])
     patient_at_peace = models.BooleanField(default=False)
     pain = models.BooleanField(default=False)
     symptoms = models.ManyToManyField(Symptoms, blank=True)

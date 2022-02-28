@@ -200,6 +200,9 @@ TEMPLATES = [
                 "arike.users.context_processors.allauth_settings",
                 "arike.apps.System.context_processors.index_vars",
             ],
+            "builtins": [
+                "arike.apps.System.templatetags.custom_tags",
+            ],
         },
     }
 ]
@@ -348,3 +351,8 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/accounts/password/set/'
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'

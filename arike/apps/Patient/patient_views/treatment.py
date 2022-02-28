@@ -4,12 +4,15 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import ModelForm
 from django import forms
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class TreatmentListView(ListView):
+class TreatmentListView(PermissionRequiredMixin,ListView):
     model = Treatment
     template_name = 'Patient/treatment/index.html'
     context_object_name = 'treatments'
+
+    permission_required = 'Patient.view_treatment'
 
     def get_queryset(self):
         return Treatment.objects.filter(patient=self.kwargs['pk'])
@@ -32,10 +35,12 @@ class TreatmentCreateForm(ModelForm):
         fields = ['care_type', 'care_sub_type', 'description']
 
 
-class TreatmentCreate(CreateView):
+class TreatmentCreate(PermissionRequiredMixin,CreateView):
     model = Treatment
     form_class = TreatmentCreateForm
     template_name = 'Patient/treatment/create.html'
+
+    permission_required = 'Patient.add_treatment'
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/treatment/"
@@ -51,12 +56,14 @@ class TreatmentCreate(CreateView):
         return super().form_valid(form)
 
 
-class TreatmentUpdateView(UpdateView):
+class TreatmentUpdateView(PermissionRequiredMixin,UpdateView):
     model = Treatment
     form_class = TreatmentCreateForm
     template_name = 'Patient/treatment/update.html'
 
     pk_url_kwarg = 'treatment_id'
+
+    permission_required = 'Patient.change_treatment'
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/treatment/"
@@ -67,11 +74,13 @@ class TreatmentUpdateView(UpdateView):
         return context
 
 
-class TreatmentDeleteView(DeleteView):
+class TreatmentDeleteView(PermissionRequiredMixin,DeleteView):
     model = Treatment
     template_name = 'Patient/treatment/delete.html'
 
     pk_url_kwarg = 'treatment_id'
+
+    permission_required = 'Patient.delete_treatment'
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/treatment/"

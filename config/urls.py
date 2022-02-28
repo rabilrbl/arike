@@ -20,6 +20,7 @@ urlpatterns = [
     path("facility/" , include("arike.apps.Facility.urls", namespace="facility")),
     path("distadmin/" , include("arike.apps.DistrictAdmin.urls", namespace="distadmin")),
     path("patient/" , include("arike.apps.Patient.urls", namespace="patient")),
+    path("schedule/" , include("arike.apps.Nurse.urls", namespace="nurse")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

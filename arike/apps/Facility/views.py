@@ -10,16 +10,20 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from arike.apps.Facility.filters import FacilityFilter
+# from arike.users.mixins import RoleRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # Create your views here.
 
 
-class IndexViewFacilities(ListView):
+class IndexViewFacilities(PermissionRequiredMixin, ListView):
     """
     Index page for Facility
     """
     template_name = 'Facility/facilities.html'
     context_object_name = "facilities"
+
+    permission_required = 'Facility.view_facility'
 
     def filter_queryset(self, queryset):
         self.myFilter = FacilityFilter(self.request.GET, queryset=queryset)
@@ -38,13 +42,15 @@ class IndexViewFacilities(ListView):
         return context
 
 
-class DetailViewFacility(DetailView):
+class DetailViewFacility(PermissionRequiredMixin, DetailView):
     """
     Detail page for each Facility
     """
     template_name = 'Facility/detail_facility.html'
     model = Facility
     context_object_name = "facility"
+
+    permission_required = 'Facility.view_facility'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -66,7 +72,7 @@ class CreateFacilityForm(ModelForm):
         fields = ['kind', 'name', 'address', 'ward', 'pincode', 'phone']
 
 
-class CreateFacility(CreateView):
+class CreateFacility(PermissionRequiredMixin, CreateView):
     """
     Create page for new Facility  
     """
@@ -74,13 +80,15 @@ class CreateFacility(CreateView):
     template_name = 'Facility/create_facility.html'
     success_url = reverse_lazy('facility:index')
 
+    permission_required = 'Facility.add_facility'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Create Facility'
         return context
 
 
-class UpdateFacility(UpdateView):
+class UpdateFacility(PermissionRequiredMixin, UpdateView):
     """
     Update page for existing Facility
     """
@@ -89,18 +97,22 @@ class UpdateFacility(UpdateView):
     template_name = 'Facility/update_facility.html'
     success_url = reverse_lazy('facility:index')
 
+    permission_required = 'Facility.change_facility'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Update Facility'
         return context
 
-class DeleteFacility(DeleteView):
+class DeleteFacility(PermissionRequiredMixin, DeleteView):
     """
     Delete page for existing Facility
     """
     template_name = 'Facility/delete_facility.html'
     model = Facility
     success_url = reverse_lazy('facility:index')
+
+    permission_required = 'Facility.delete_facility'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

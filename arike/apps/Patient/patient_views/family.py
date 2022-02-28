@@ -5,12 +5,15 @@ from arike.apps.Patient.models import Patient
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.contrib.admin import widgets
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class FamilyListView(ListView):
+class FamilyListView(PermissionRequiredMixin,ListView):
     model = FamilyDetail
     template_name = 'Patient/family_details/index.html'
     context_object_name = 'family'
+
+    permission_required = 'Patient.view_familydetail'
 
     def get_queryset(self):
         return FamilyDetail.objects.filter(patient=self.kwargs['pk'])
@@ -35,10 +38,12 @@ class FamilyDetailCreateForm(ModelForm):
         fields = ['full_name','email','date_of_birth','phone','relation','education', 'occupation', 'address']
 
 
-class FamilyDetailCreate(CreateView):
+class FamilyDetailCreate(PermissionRequiredMixin,CreateView):
     model = FamilyDetail
     form_class = FamilyDetailCreateForm
     template_name = 'Patient/family_details/create.html'
+
+    permission_required = 'Patient.add_familydetail'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -51,12 +56,14 @@ class FamilyDetailCreate(CreateView):
         return super().form_valid(form)
 
 
-class FamilyDetailUpdateView(UpdateView):
+class FamilyDetailUpdateView(PermissionRequiredMixin,UpdateView):
     model = FamilyDetail
     form_class = FamilyDetailCreateForm
     template_name = 'Patient/family_details/update.html'
 
     pk_url_kwarg = 'family_id'
+
+    permission_required = 'Patient.change_familydetail'
 
     def get_success_url(self):
         return reverse_lazy('patient:family', kwargs={'pk': self.kwargs['pk']})
@@ -70,13 +77,15 @@ class FamilyDetailUpdateView(UpdateView):
         return context
 
 
-class FamilyDetailDeleteView(DeleteView):
+class FamilyDetailDeleteView(PermissionRequiredMixin,DeleteView):
     model = FamilyDetail
     template_name = 'Patient/family_details/delete.html'
 
     pk_url_kwarg = 'family_id'
 
     context_object_name = 'family'
+
+    permission_required = 'Patient.delete_familydetail'
 
     def get_success_url(self):
         return reverse_lazy('patient:family', kwargs={'pk': self.kwargs['pk']})

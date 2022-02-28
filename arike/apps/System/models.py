@@ -17,6 +17,7 @@ class BaseManager(models.Manager):
     """
     Base manager for models.
     """
+
     def get_queryset(self):
         return super(BaseManager, self).get_queryset().filter(deleted=False)
     
@@ -70,6 +71,7 @@ class District(BaseModel):
     state = models.ForeignKey(State, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
+
 
     def __str__(self):
         return self.name

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="space-y-3 max-w-3xl">
+    <h1>Schedule Visit</h1>
+    <div class="bg-gray-50 p-6 rounded-xl">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary w-full">Schedule Visit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

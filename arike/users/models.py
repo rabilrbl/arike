@@ -9,6 +9,12 @@ from django.utils.translation import gettext_lazy as _
 from arike.users import choice_data as choices
 from arike.apps.System.models import District, BaseModel
 from arike.apps.Facility.models import Facility
+from django.contrib.auth.models import UserManager
+
+
+class CustomUserManager(UserManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
 
 
 
@@ -31,6 +37,8 @@ class User(AbstractUser, BaseModel):
     phone = models.CharField(max_length=11, blank=True)
     gender = models.IntegerField(choices=choices.GENDER, default=choices.GENDER[2][0])
 
+    objects = CustomUserManager()
+
     def save(self, *args, **kwargs):
         if not self.facility is None:
             self.district = self.facility.ward.local_body.district
@@ -46,8 +54,12 @@ class User(AbstractUser, BaseModel):
 
         """
         username = "".join(
-            random.choice(string.ascii_lowercase + string.digits) for _ in range(10)
+            random.choices(string.ascii_lowercase + string.digits, k=10)
         )
+        while self.__class__.objects.filter(username=username).exists():
+            username = "".join(
+                random.choices(string.ascii_lowercase + string.digits, k=10)
+            )
         return username
 
     def get_absolute_url(self):
@@ -58,3 +70,6 @@ class User(AbstractUser, BaseModel):
 
         """
         return reverse("users:detail", kwargs={"external_id": self.external_id})
+
+    def __str__(self):
+        return f"{self.full_name} ({self.get_role_display()})"

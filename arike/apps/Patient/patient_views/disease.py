@@ -5,12 +5,15 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import ModelForm
 from django import forms
 from django.shortcuts  import redirect, HttpResponseRedirect
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class DiseaseListView(ListView):
+class DiseaseListView(PermissionRequiredMixin,ListView):
     model = PatientDisease
     template_name = 'Patient/disease/index.html'
     context_object_name = 'diseases'
+
+    permission_required = 'Patient.view_patientdisease'
 
     def get_queryset(self):
         return PatientDisease.objects.filter(patient=self.kwargs['pk'])
@@ -28,10 +31,12 @@ class DiseaseCreateForm(ModelForm):
         fields = ['name', 'icds_code']
 
 
-class DiseaseCreate(CreateView):
+class DiseaseCreate(PermissionRequiredMixin,CreateView):
     model = Disease
     form_class = DiseaseCreateForm 
     template_name = 'Patient/disease/create.html'
+
+    permission_required = 'Patient.create_disease'
     
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/disease/"
@@ -53,10 +58,12 @@ class DiseaseCreate(CreateView):
         return super().form_success(form)
 
 
-class DiseaseUpdateView(UpdateView):
+class DiseaseUpdateView(PermissionRequiredMixin,UpdateView):
     model = Disease
     form_class = DiseaseCreateForm
     template_name = 'Patient/disease/update.html'
+
+    permission_required = 'Patient.change_disease'
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/disease/"
@@ -79,9 +86,11 @@ class DiseaseUpdateView(UpdateView):
         return context
 
 
-class DiseaseDeleteView(DeleteView):
+class DiseaseDeleteView(PermissionRequiredMixin,DeleteView):
     model = Disease
     template_name = 'Patient/disease/delete.html'
+
+    permission_required = 'Patient.delete_disease'
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/disease/"

@@ -7,7 +7,6 @@ from arike.users.forms import UserAdminChangeForm, UserAdminCreationForm
 
 User = get_user_model()
 
-
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
 
@@ -15,7 +14,7 @@ class UserAdmin(auth_admin.UserAdmin):
     add_form = UserAdminCreationForm
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        (_("Personal info"), {"fields": ("full_name", "username")}),
+        (_("Personal info"), {"fields": ("full_name", "phone", "gender","district")}),
         (
             _("Permissions"),
             {
@@ -30,5 +29,5 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["email", "full_name", "is_superuser"]
-    search_fields = ["full_name"]
+    list_display = ["username", "full_name", "is_superuser"]
+    search_fields = ["name"]
