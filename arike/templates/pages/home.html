@@ -8,19 +8,19 @@
         <div class="mt-5 grid gap-4 grid-cols-2 max-w-4xl">
             {% with gridclass="border-2 flex space-x-2 border-gray-600 px-5 py-12 justify-center text-center rounded-xl min-w-fit cursor-pointer hover:-translate-x-1 hover:-translate-y-1 hover:bg-gray-800 hover:text-white transition duration-200 ease-in-out " %}
                 {% if request.user.role == 1 %}
-                <div class="{{ gridclass }}">
+                <div class="{{ gridclass }}" onclick="window.location.href='{% url 'facility:index' %}'">
                     <div class="space-y-2">
                         <h3>Manage Facility</h3>
                         <p>Manage your facility that comes under PHC or CHC</p>
                     </div>
                 </div>
-                <div class="{{ gridclass }}">
+                <div class="{{ gridclass }}" onclick="window.location.href='{% url 'distadmin:users' %}'">
                     <div class="space-y-2">
                         <h3>Manage Staff</h3>
                         <p>Manage your staff that comes under PHC or CHC</p>
                     </div>
                 </div>
-                {% else %}
+                {% endif %}
                 <div class="{{ gridclass }}" onclick="window.location.href='{% url 'patient:patients' %}'">
                     <div class="space-y-2">
                         <h3>Manage Patients</h3>
@@ -45,7 +45,7 @@
                         <p>Get Daily Reports about your work</p>
                     </div>
                 </div>
-                {% endif %}
+                
             {% endwith %}
         </div>
     </div>

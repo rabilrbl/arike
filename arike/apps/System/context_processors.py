@@ -13,9 +13,9 @@ def index_vars(request):
         data["navitems"]['Users'] = reverse("distadmin:users")
         data["navitems"]['Facility'] = reverse("facility:index")
     
-    if request.user.is_authenticated and request.user.role in (3,4):
-        data["navitems"]['Agenda'] = reverse("nurse:agenda")
-        data["navitems"]['Schedule'] = reverse("nurse:schedule")
+    
+    data["navitems"]['Agenda'] = reverse("nurse:agenda")
+    data["navitems"]['Schedule'] = reverse("nurse:schedule")
     
     data["navitems"]['Patient'] = reverse("patient:patients")
     data["navitems"]['Profile'] = reverse('users:update')
