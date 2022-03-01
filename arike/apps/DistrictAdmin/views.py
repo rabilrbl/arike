@@ -11,7 +11,8 @@ from allauth.utils import build_absolute_uri
 from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
 from allauth.account.utils import user_pk_to_url_str
 from django.contrib import messages
-from django.core.mail import send_mail
+from arike.apps.DistrictAdmin.tasks import send_email
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 User = get_user_model()
@@ -63,12 +64,14 @@ class NewUserForm(ModelForm):
         model = User
         fields = ['full_name','email','facility','role']
 
-class NewUser(PermissionRequiredMixin, CreateView):
+class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = NewUserForm
     template_name = 'DistrictAdmin/new_user.html'
     success_url = reverse_lazy('distadmin:users')
 
     permission_required = 'users.add_user'
+
+    success_message = 'User was successfully created, an email will be sent to the user!'
 
     # send email confirmation on user is created
     def form_valid(self, form):
@@ -83,13 +86,13 @@ class NewUser(PermissionRequiredMixin, CreateView):
                 kwargs=dict(uidb36=user_pk_to_url_str(user), key=temp_key),
             )
             url = build_absolute_uri(self.request, path)
-            send_mail(
+            send_email.delay(
                 subject=f'Welcome to Arike {user.full_name}',
                 message=f'''Please click on the link below to set your password \n
-                 {url}\n\n We are happy to have you on board!\n
-                 You were added by the District Admin {self.request.user.full_name}.
-                  If you are not {user.full_name} please contact us Immediately.
-                   \n\n Thank you! \n Arike Team''',
+{url}\n\n We are happy to have you on board!\n
+You were added by the District Admin {self.request.user.full_name}.
+If you are not {user.full_name} please contact us Immediately.
+\n\n Thank you! \n Arike Team''',
                 from_email= "arikecare@gmail.com",
                 recipient_list=[user.email],
                 fail_silently=False,
