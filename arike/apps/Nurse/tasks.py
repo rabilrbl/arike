@@ -6,7 +6,7 @@ from arike.apps.Nurse.models import Reports
 from config  import celery_app
 from celery.schedules import crontab
 
-
+@celery_app.task(retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
 def send_email_report(report) -> None:
     user = report.user
     task = VisitSchedule.objects.filter(user=user, deleted=False, date=datetime.now().date())
