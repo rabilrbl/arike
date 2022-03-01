@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from allauth.account.signals import password_reset
 from django.db import transaction
+from allauth.account.models import EmailAddress
 
 
 User = get_user_model()
@@ -32,5 +33,7 @@ def set_user_permissions(sender, instance, created, **kwargs):
 @receiver(password_reset, sender=User)
 def set_user_is_verified(request, user, **kwargs):
     with transaction.atomic():
-        user.is_verified = True
+        email_address = EmailAddress.objects.get(user=user)
+        user.is_verified = email_address.verified = email_address.primary = True
         user.save()
+        email_address.save()
