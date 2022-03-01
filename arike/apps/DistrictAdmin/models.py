@@ -38,6 +38,6 @@ def set_user_permissions(sender, instance, created, **kwargs):
 
 @receiver(password_reset, sender=User)
 def set_user_is_verified(sender, request,**kwargs):
-    user = sender
+    user = User.objects.get(pk=sender.pk)
     user.is_verified = True
     user.save()
