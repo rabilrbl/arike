@@ -29,13 +29,14 @@
                             <label class="{{ labelClass }}">Facility</label>
                             <span class="">{{ patient.facility.name }}, {{ patient.facility.ward.local_body.district }}</span>
                         </div>
-                        <div class="flex flex-col">
+                        <!-- TODO: Add next visit date -->
+                        <!-- <div class="flex flex-col">
                             <label class="{{ labelClass }}">Next Visit</label>
-                            <span class="">2nd March 2021 @ 2pm</span>
-                        </div>
+                            <span class="">{{ next_visit }}</span>
+                        </div> -->
                         <div class="flex flex-col">
                             <label class="{{ labelClass }}">Last Visit</label>
-                            <span class="">1st March 2021 @ 1pm</span>
+                            <span class="">{{ last_visit }}</span>
                         </div>
                     {% endwith %}
                 </div>

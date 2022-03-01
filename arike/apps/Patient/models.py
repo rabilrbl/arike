@@ -117,7 +117,7 @@ class VisitSchedule(BaseModel):
     duration = models.IntegerField(default=30)
 
     def __str__(self):
-        return self.patient.full_name + " - " + self.date.strftime("%d-%m-%Y") + " - " + self.time.strftime("%H:%M")
+        return self.date.strftime("%d-%m-%Y") + " @ " + self.time.strftime("%I:%M %p")
 
 
 PALLIATIVE_PHASE = (

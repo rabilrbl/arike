@@ -1,4 +1,3 @@
-
 from django import forms
 from django.contrib.admin import widgets
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -9,7 +8,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from arike.apps.Patient.filters import PatientFilter
-from arike.apps.Patient.models import Patient
+from arike.apps.Patient.models import Patient, VisitSchedule
 from arike.users import choice_data as choices
 
 
@@ -52,6 +51,9 @@ class PatientDetailView(PermissionRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Patient'
+        context['last_visit'] = VisitSchedule.objects.filter(patient=self.object).order_by('-date').first()
+        # TODO: add next visit date
+        # context['next_visit'] =
         return context
 
 
