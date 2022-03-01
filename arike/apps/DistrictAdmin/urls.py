@@ -1,12 +1,11 @@
 from django.urls import path
 
-
 from arike.apps.DistrictAdmin.views import (
-    UserIndexView,
     NewUser,
-    UserDetailView,
-    UserUpdateView,
     UserDeleteView,
+    UserDetailView,
+    UserIndexView,
+    UserUpdateView,
 )
 
 app_name = "apps.DistrictAdmin"

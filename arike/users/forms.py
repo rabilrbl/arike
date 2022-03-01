@@ -1,4 +1,5 @@
 from dataclasses import field
+
 from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 from django.contrib.auth import forms as admin_forms
@@ -35,7 +36,6 @@ class UserSignupForm(SignupForm):
     Default fields will be added automatically.
     Check UserSocialSignupForm for accounts created from social.
     """
-
 
 
 class UserSocialSignupForm(SocialSignupForm):

@@ -1,15 +1,24 @@
 from datetime import datetime, timedelta
-from pytz import timezone
-from django.core.mail import send_mail
-from arike.apps.Patient.models import VisitSchedule, Treatment
-from arike.apps.Nurse.models import Reports
-from config  import celery_app
+
 from celery.schedules import crontab
+from django.core.mail import send_mail
+from pytz import timezone
+
+from arike.apps.Nurse.models import Reports
+from arike.apps.Patient.models import Treatment, VisitSchedule
+from config import celery_app
+
 
 @celery_app.task(retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
 def send_email_report(report) -> None:
+    """
+    Send email report to the nurse
+    """
     user = report.user
-    task = VisitSchedule.objects.filter(user=user, deleted=False, date=datetime.now().date())
+    task = VisitSchedule.objects.filter(
+        user=user, deleted=False,
+        date=datetime.now().date()
+    )
     print(f"Sending email reminder to {user.full_name}\n")
     patients = task.count()
     # TODO : add more details   (treatment, note, etc)
@@ -27,7 +36,15 @@ def send_email_report(report) -> None:
     )
     today = datetime.now().date()
     # increment by a day
-    report.last_sent = datetime(today.year, today.month, today.day, report.last_sent.hour, report.last_sent.minute, report.last_sent.second, tzinfo=timezone('UTC')) + timedelta(days=1)
+    report.last_sent = datetime(
+        today.year,
+        today.month,
+        today.day,
+        report.last_sent.hour,
+        report.last_sent.minute,
+        report.last_sent.second,
+        tzinfo=timezone('UTC')
+    ) + timedelta(days=1)
     report.save()
     print("Email sent to {}".format(user.email))
 
@@ -35,7 +52,6 @@ def send_email_report(report) -> None:
 @celery_app.task
 def periodic_emailer():
     currentTime = datetime.now(timezone('UTC'))
-    print("Checking time for user daily report......")
     reports = Reports.objects.filter(
         last_sent__lte=currentTime,
         consent=True

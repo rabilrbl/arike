@@ -1,24 +1,24 @@
 
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.forms import ModelForm
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth import get_user_model
-from arike.apps.DistrictAdmin.filters import UserFilter
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from allauth.utils import build_absolute_uri
 from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
 from allauth.account.utils import user_pk_to_url_str
+from allauth.utils import build_absolute_uri
 from django.contrib import messages
-from arike.apps.DistrictAdmin.tasks import send_email
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.forms import ModelForm
+from django.urls import reverse, reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
 
+from arike.apps.DistrictAdmin.filters import UserFilter
+from arike.apps.DistrictAdmin.tasks import send_email
 
 User = get_user_model()
 
 
-class UserIndexView(PermissionRequiredMixin ,ListView):
+class UserIndexView(PermissionRequiredMixin, ListView):
     """
     District Admin User list page
     """
@@ -32,7 +32,7 @@ class UserIndexView(PermissionRequiredMixin ,ListView):
         return self.myFilter.qs
 
     def get_queryset(self):
-        queryset = User.objects.filter(district=self.request.user.district, role__range=(3,4))
+        queryset = User.objects.filter(district=self.request.user.district, role__range=(3, 4))
         queryset = self.filter_queryset(queryset)
         return queryset
 
@@ -43,6 +43,7 @@ class UserIndexView(PermissionRequiredMixin ,ListView):
         context['myfilter'] = self.myFilter
         return context
 
+
 class NewUserForm(ModelForm):
     def __init__(self, *args, **kwargs):
         className = "px-4 py-2 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500"
@@ -51,18 +52,19 @@ class NewUserForm(ModelForm):
             "class": className,
         })
         self.fields['email'].widget.attrs.update({
-            "class":className, 'required':'true'
+            "class": className, 'required': 'true'
         }),
         self.fields['facility'].widget.attrs.update({
-            "class":className, 'required':'true'
+            "class": className, 'required': 'true'
         })
         self.fields['role'].widget.attrs.update({
-            "class":className, 'required':'true'
+            "class": className, 'required': 'true'
         })
 
     class Meta:
         model = User
-        fields = ['full_name','email','facility','role']
+        fields = ['full_name', 'email', 'facility', 'role']
+
 
 class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = NewUserForm
@@ -93,7 +95,7 @@ class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
 You were added by the District Admin {self.request.user.full_name}.
 If you are not {user.full_name} please contact us Immediately.
 \n\n Thank you! \n Arike Team''',
-                from_email= "arikecare@gmail.com",
+                from_email="arikecare@gmail.com",
                 recipient_list=[user.email],
                 fail_silently=False,
             )
@@ -103,8 +105,9 @@ If you are not {user.full_name} please contact us Immediately.
         context = super().get_context_data(**kwargs)
         context['title'] = 'New User'
         return context
-    
-class UserDetailView(PermissionRequiredMixin ,DetailView):
+
+
+class UserDetailView(PermissionRequiredMixin, DetailView):
     """
     District Admin User detail page
     """
@@ -119,7 +122,7 @@ class UserDetailView(PermissionRequiredMixin ,DetailView):
         return context
 
 
-class UserUpdateView(PermissionRequiredMixin ,UpdateView):
+class UserUpdateView(PermissionRequiredMixin, UpdateView):
     """
     District Admin User update page
     """
@@ -136,7 +139,7 @@ class UserUpdateView(PermissionRequiredMixin ,UpdateView):
         return context
 
 
-class UserDeleteView(PermissionRequiredMixin ,DeleteView):
+class UserDeleteView(PermissionRequiredMixin, DeleteView):
     """
     District Admin User delete page
     """
@@ -150,7 +153,7 @@ class UserDeleteView(PermissionRequiredMixin ,DeleteView):
         if form.is_valid():
             messages.success(self.request, 'User Successfully Deleted')
             return super().form_valid(form)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Delete User'

@@ -1,15 +1,17 @@
 
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.forms import ModelForm
 from django import forms
+from django.contrib.admin import widgets
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.forms import ModelForm
 from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
+
+from arike.apps.Patient.filters import PatientFilter
 from arike.apps.Patient.models import Patient
 from arike.users import choice_data as choices
-from django.contrib.admin import widgets
-from arike.apps.Patient.filters import PatientFilter
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 class PatientIndexView(PermissionRequiredMixin, ListView):
     """
@@ -37,7 +39,7 @@ class PatientIndexView(PermissionRequiredMixin, ListView):
         return context
 
 
-class PatientDetailView(PermissionRequiredMixin,DetailView):
+class PatientDetailView(PermissionRequiredMixin, DetailView):
     """
     Patient detail page
     """
@@ -88,10 +90,11 @@ class PatientForm(ModelForm):
 
     class Meta:
         model = Patient
-        fields = ['full_name','date_of_birth','address','landmark','ward', 'facility','phone','emergency_phone_number','gender']
+        fields = ['full_name', 'date_of_birth', 'address', 'landmark',
+                  'ward', 'facility', 'phone', 'emergency_phone_number', 'gender']
 
 
-class CreatePatient(PermissionRequiredMixin,CreateView):
+class CreatePatient(PermissionRequiredMixin, CreateView):
     form_class = PatientForm
     template_name = 'Patient/create_patient.html'
     success_url = reverse_lazy('patient:patients')
@@ -104,7 +107,7 @@ class CreatePatient(PermissionRequiredMixin,CreateView):
         return context
 
 
-class UpdatePatient(PermissionRequiredMixin,UpdateView):
+class UpdatePatient(PermissionRequiredMixin, UpdateView):
     model = Patient
     form_class = PatientForm
     template_name = 'Patient/update_patient.html'
@@ -118,7 +121,7 @@ class UpdatePatient(PermissionRequiredMixin,UpdateView):
         return context
 
 
-class DeletePatient(PermissionRequiredMixin,DeleteView):
+class DeletePatient(PermissionRequiredMixin, DeleteView):
     model = Patient
     template_name = 'Patient/delete_patient.html'
     success_url = reverse_lazy('patient:patients')

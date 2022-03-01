@@ -1,10 +1,13 @@
 from django_filters import FilterSet, OrderingFilter
+
+from arike.apps.DistrictAdmin.filters import INPUTCLASS
 from arike.apps.Patient.models import Patient
 
 
-INPUTCLASS = "textinput w-full rounded-lg block bg-white text-gray-700 focus:outline-none appearance-none leading-normal py-2 border px-4 border-gray-300 mb-2"
-
 class PatientFilter(FilterSet):
+    """
+    Filters for Patient model
+    """
     sort = OrderingFilter(
         fields=(
             ('created_at', 'created_at'),
@@ -16,6 +19,7 @@ class PatientFilter(FilterSet):
         },
         label='Sort by'
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for s in self.filters:
@@ -26,7 +30,4 @@ class PatientFilter(FilterSet):
 
     class Meta:
         model = Patient
-        fields = ['full_name', 'gender', 'facility','phone']
-
-
-
+        fields = ['full_name', 'gender', 'facility', 'phone']

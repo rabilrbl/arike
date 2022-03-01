@@ -1,21 +1,19 @@
 import random
 import string
 
-from urllib import request
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from arike.users import choice_data as choices
-from arike.apps.System.models import District, BaseModel
+
 from arike.apps.Facility.models import Facility
-from django.contrib.auth.models import UserManager
+from arike.apps.System.models import BaseModel, District
+from arike.users import choice_data as choices
 
 
 class CustomUserManager(UserManager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
-
 
 
 class User(AbstractUser, BaseModel):
@@ -26,7 +24,8 @@ class User(AbstractUser, BaseModel):
     """
 
     district = models.ForeignKey(District, on_delete=models.PROTECT, null=True, default=None)
-    facility = models.ForeignKey(Facility,verbose_name=_("Assign Facility"), on_delete=models.PROTECT, null=True, default=None)
+    facility = models.ForeignKey(Facility, verbose_name=_("Assign Facility"),
+                                 on_delete=models.PROTECT, null=True, default=None)
 
     #: First and last name do not cover name patterns around the globe
     full_name = models.CharField(_("Name of User"), blank=True, max_length=255)
@@ -45,7 +44,7 @@ class User(AbstractUser, BaseModel):
         if not self.username:
             self.username = self.get_random_username()
         super().save(*args, **kwargs)
-    
+
     def get_random_username(self):
         """Generate random username.
 

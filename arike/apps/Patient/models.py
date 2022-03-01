@@ -1,19 +1,19 @@
-from wsgiref.simple_server import demo_app
-from django.db import models
-from arike.users import choice_data as choices
-from arike.apps.System.models import BaseModel, Ward
-from arike.apps.Facility.models import Facility
-from datetime import date, datetime
-from django.contrib.auth import get_user_model
+from datetime import datetime
 
+from django.contrib.auth import get_user_model
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from arike.apps.Facility.models import Facility
 from arike.apps.Patient.tasks import send_report_to_family_members
-from django.core import serializers
+from arike.apps.System.models import BaseModel, Ward
+from arike.users import choice_data as choices
 
 User = get_user_model()
 
 # Create your models here.
+
 
 class Patient(BaseModel):
     ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
@@ -30,7 +30,7 @@ class Patient(BaseModel):
 
     def __str__(self):
         return self.full_name
-    
+
     def calculate_age(self) -> int:
         """
         Calculate age from date of birth
@@ -61,15 +61,16 @@ EDUCATION = (
 )
 
 ICDS_CODE = (
-    ("D-32","DM"),
-    ("HT-58","Hypertension"),
-    ("IDH-21","IHD"),
-    ("DPOC-144","COPD"),
-    ("DM-62","Dementia"),
-    ("CAV-89","CVA"),
-    ("C-98","Cancer"),
-    ("DC-25","CKD")
+    ("D-32", "DM"),
+    ("HT-58", "Hypertension"),
+    ("IDH-21", "IHD"),
+    ("DPOC-144", "COPD"),
+    ("DM-62", "Dementia"),
+    ("CAV-89", "CVA"),
+    ("C-98", "Cancer"),
+    ("DC-25", "CKD")
 )
+
 
 class FamilyDetail(BaseModel):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -120,19 +121,20 @@ class VisitSchedule(BaseModel):
 
 
 PALLIATIVE_PHASE = (
-    (1,"Stable"),
-    (2,"Unstable"),
-    (3,"Deteriorating"),
-    (4,"Dying"),
+    (1, "Stable"),
+    (2, "Unstable"),
+    (3, "Deteriorating"),
+    (4, "Dying"),
 )
 
 SYSTEMIC_EXAMINATION = (
-    (1,"Cardiovascular"),
-    (2,"Gastrointestinal"),
-    (3,"Central nervous system"),
-    (4,"Respiratory"),
-    (5,"Genital-urinary"),
+    (1, "Cardiovascular"),
+    (2, "Gastrointestinal"),
+    (3, "Central nervous system"),
+    (4, "Respiratory"),
+    (5, "Genital-urinary"),
 )
+
 
 class VisitDetail(BaseModel):
     visit_schedule = models.ForeignKey(VisitSchedule, on_delete=models.PROTECT)
@@ -161,7 +163,7 @@ class Treatment(BaseModel):
 
     description = models.TextField()
     care_type = models.CharField(max_length=255, blank=True, null=True)
-    care_sub_type = models.CharField(max_length=255, blank=True, null=True) 
+    care_sub_type = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.care_type + " - " + self.care_sub_type
@@ -180,6 +182,9 @@ class TreatmentNotes(BaseModel):
 @receiver(post_save, sender=VisitDetail)
 def send_report_to_family_members_on_save(sender, instance, **kwargs):
     print(f"Sending report to family members of {instance.visit_schedule.patient.full_name}..")
+    # Hardcoding data & famdata because I got error when I tried to to use model.values()
+    # TODO : Fix this
+    # Data to be sent to family members
     data = {
         'full_name': instance.visit_schedule.patient.full_name,
         'palliative_phase': instance.get_palliative_phase_display(),
@@ -196,8 +201,8 @@ def send_report_to_family_members_on_save(sender, instance, **kwargs):
     famdata = FamilyDetail.objects.filter(patient=instance.visit_schedule.patient)
     family = []
     for fam in famdata:
-        temp={
-            'full_name':fam.full_name,
+        temp = {
+            'full_name': fam.full_name,
             'email': fam.email,
         }
         family.append(temp)

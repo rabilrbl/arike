@@ -1,14 +1,13 @@
-from arike.apps.Patient.models import Patient, Disease, PatientDisease
-
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.forms import ModelForm
-from django import forms
-from django.shortcuts  import redirect, HttpResponseRedirect
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.forms import ModelForm
+from django.shortcuts import HttpResponseRedirect
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from arike.apps.Patient.models import Disease, Patient, PatientDisease
 
 
-class DiseaseListView(PermissionRequiredMixin,ListView):
+class DiseaseListView(PermissionRequiredMixin, ListView):
     model = PatientDisease
     template_name = 'Patient/disease/index.html'
     context_object_name = 'diseases'
@@ -31,13 +30,13 @@ class DiseaseCreateForm(ModelForm):
         fields = ['name', 'icds_code']
 
 
-class DiseaseCreate(PermissionRequiredMixin,CreateView):
+class DiseaseCreate(PermissionRequiredMixin, CreateView):
     model = Disease
-    form_class = DiseaseCreateForm 
+    form_class = DiseaseCreateForm
     template_name = 'Patient/disease/create.html'
 
     permission_required = 'Patient.create_disease'
-    
+
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/disease/"
 
@@ -51,14 +50,17 @@ class DiseaseCreate(PermissionRequiredMixin,CreateView):
         if form.is_valid():
             p = PatientDisease.objects.filter(disease=form.instance).first()
             if not p:
-                p = PatientDisease.objects.create(patient=Patient.objects.get(pk=self.kwargs['pk']), disease=Disease.objects.create(name=form.instance.name, icds_code=form.instance.icds_code), user=self.request.user, note=form.data['note'])
+                p = PatientDisease.objects.create(patient=Patient.objects.get(pk=self.kwargs['pk']), disease=Disease.objects.create(
+                    name=form.instance.name, icds_code=form.instance.icds_code), user=self.request.user, note=form.data['note'])
         return HttpResponseRedirect(self.get_success_url())
+
     def form_success(self, form):
-        PatientDisease.objects.create(patient=Patient.objects.get(pk=self.kwargs['pk']), disease=form.instance, user=self.request.user, note=form.data['note'])
+        PatientDisease.objects.create(patient=Patient.objects.get(
+            pk=self.kwargs['pk']), disease=form.instance, user=self.request.user, note=form.data['note'])
         return super().form_success(form)
 
 
-class DiseaseUpdateView(PermissionRequiredMixin,UpdateView):
+class DiseaseUpdateView(PermissionRequiredMixin, UpdateView):
     model = Disease
     form_class = DiseaseCreateForm
     template_name = 'Patient/disease/update.html'
@@ -86,7 +88,7 @@ class DiseaseUpdateView(PermissionRequiredMixin,UpdateView):
         return context
 
 
-class DiseaseDeleteView(PermissionRequiredMixin,DeleteView):
+class DiseaseDeleteView(PermissionRequiredMixin, DeleteView):
     model = Disease
     template_name = 'Patient/disease/delete.html'
 

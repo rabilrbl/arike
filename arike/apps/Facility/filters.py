@@ -1,8 +1,8 @@
 from django_filters import FilterSet, OrderingFilter
+
+from arike.apps.DistrictAdmin.filters import INPUTCLASS
 from arike.apps.Facility.models import Facility
 
-
-INPUTCLASS = "textinput w-full rounded-lg block bg-white text-gray-700 focus:outline-none appearance-none leading-normal py-2 border px-4 border-gray-300 mb-2"
 
 class FacilityFilter(FilterSet):
     sort = OrderingFilter(
@@ -16,6 +16,7 @@ class FacilityFilter(FilterSet):
         },
         label='Sort by'
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for s in self.filters:
@@ -26,7 +27,4 @@ class FacilityFilter(FilterSet):
 
     class Meta:
         model = Facility
-        fields = ['ward','kind','name', 'pincode', 'phone']
-
-
-
+        fields = ['ward', 'kind', 'name', 'pincode', 'phone']

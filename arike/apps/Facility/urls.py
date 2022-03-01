@@ -1,7 +1,11 @@
 from django.urls import path
 
 from arike.apps.Facility.views import (
-    IndexViewFacilities, CreateFacility, UpdateFacility, DetailViewFacility, DeleteFacility
+    CreateFacility,
+    DeleteFacility,
+    DetailViewFacility,
+    IndexViewFacilities,
+    UpdateFacility,
 )
 
 app_name = "apps.Facility"

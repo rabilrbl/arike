@@ -1,17 +1,12 @@
-from django.shortcuts import render
-
-# Models
-from arike.apps.Facility.models import Facility
-
-# import GenericViews
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import ModelForm
 from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
+
 from arike.apps.Facility.filters import FacilityFilter
-# from arike.users.mixins import RoleRequiredMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from arike.apps.Facility.models import Facility
 
 # Create your views here.
 
@@ -57,15 +52,20 @@ class DetailViewFacility(PermissionRequiredMixin, DetailView):
         context['title'] = 'Facility'
         return context
 
+
 class CreateFacilityForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
-        self.fields['address'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl', 'rows': '2'})
-        self.fields['ward'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
-        self.fields['pincode'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
-        self.fields['phone'].widget.attrs.update({'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
-
+        self.fields['name'].widget.attrs.update(
+            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+        self.fields['address'].widget.attrs.update(
+            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl', 'rows': '2'})
+        self.fields['ward'].widget.attrs.update(
+            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+        self.fields['pincode'].widget.attrs.update(
+            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
 
     class Meta:
         model = Facility
@@ -103,6 +103,7 @@ class UpdateFacility(PermissionRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Update Facility'
         return context
+
 
 class DeleteFacility(PermissionRequiredMixin, DeleteView):
     """

@@ -5,7 +5,7 @@ from config import celery_app
 
 
 @celery_app.task(retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
-def send_report_to_family_members(instance, family,**kwargs):
+def send_report_to_family_members(instance, family, **kwargs):
     visitdata = instance
     subject = 'Patient Visit Report from Arike'
     message = f'''Dear Family member,

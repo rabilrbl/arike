@@ -1,13 +1,13 @@
-from arike.apps.Patient.models import Patient, Treatment
-
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.forms import ModelForm
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from arike.apps.Patient.models import Patient, Treatment
 
 
-class TreatmentListView(PermissionRequiredMixin,ListView):
+class TreatmentListView(PermissionRequiredMixin, ListView):
     model = Treatment
     template_name = 'Patient/treatment/index.html'
     context_object_name = 'treatments'
@@ -35,7 +35,7 @@ class TreatmentCreateForm(ModelForm):
         fields = ['care_type', 'care_sub_type', 'description']
 
 
-class TreatmentCreate(PermissionRequiredMixin,CreateView):
+class TreatmentCreate(PermissionRequiredMixin, CreateView):
     model = Treatment
     form_class = TreatmentCreateForm
     template_name = 'Patient/treatment/create.html'
@@ -56,7 +56,7 @@ class TreatmentCreate(PermissionRequiredMixin,CreateView):
         return super().form_valid(form)
 
 
-class TreatmentUpdateView(PermissionRequiredMixin,UpdateView):
+class TreatmentUpdateView(PermissionRequiredMixin, UpdateView):
     model = Treatment
     form_class = TreatmentCreateForm
     template_name = 'Patient/treatment/update.html'
@@ -74,7 +74,7 @@ class TreatmentUpdateView(PermissionRequiredMixin,UpdateView):
         return context
 
 
-class TreatmentDeleteView(PermissionRequiredMixin,DeleteView):
+class TreatmentDeleteView(PermissionRequiredMixin, DeleteView):
     model = Treatment
     template_name = 'Patient/treatment/delete.html'
 

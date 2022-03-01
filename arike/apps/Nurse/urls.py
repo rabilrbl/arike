@@ -1,13 +1,14 @@
 from django.urls import path
+
 from arike.apps.Nurse.views import (
+    AgendaView,
+    HealthInfoView,
+    ReportsConsentView,
     ScheduleList,
     ScheduleVisit,
-    UnscheduleVisit,
-    AgendaView,
-    VisitAgendaView,
-    HealthInfoView,
     TreatmentNoteView,
-    ReportsConsentView,
+    UnscheduleVisit,
+    VisitAgendaView,
 )
 
 app_name = 'nurse'

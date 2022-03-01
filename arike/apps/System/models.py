@@ -1,5 +1,6 @@
-from django.db import models
 from uuid import uuid4
+
+from django.db import models
 
 # CHOICES
 # Reference https://github.com/coronasafe/care/blob/master/care/users/models.py#L61
@@ -13,6 +14,7 @@ LOCAL_BODY_CHOICES = (
     (7, "Others"),
 )
 
+
 class BaseManager(models.Manager):
     """
     Base manager for models.
@@ -20,13 +22,13 @@ class BaseManager(models.Manager):
 
     def get_queryset(self):
         return super(BaseManager, self).get_queryset().filter(deleted=False)
-    
+
     def get_or_none(self, **kwargs):
         try:
             return self.get(**kwargs)
         except self.model.DoesNotExist:
             return None
-    
+
 
 # Add Common fields to share accross all models
 class BaseModel(models.Model):
@@ -53,7 +55,7 @@ class BaseModel(models.Model):
 
     def get_last_updated_date(self):
         return self.updated_at.strftime("%d-%m-%Y %H:%M:%S")
-    
+
     def get_created_date(self):
         return self.created_at.strftime("%d-%m-%Y %H:%M:%S")
 
@@ -61,23 +63,26 @@ class BaseModel(models.Model):
         abstract = True
 
 # Models
+
+
 class State(BaseModel):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
+
 class District(BaseModel):
     state = models.ForeignKey(State, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
 
-
     def __str__(self):
         return self.name
 
+
 class LocalBody(BaseModel):
-    district  = models.ForeignKey(District, on_delete=models.PROTECT)
+    district = models.ForeignKey(District, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
     kind = models.IntegerField(choices=LOCAL_BODY_CHOICES, default=7)
@@ -88,6 +93,7 @@ class LocalBody(BaseModel):
 
     def __str__(self):
         return f"{self.name} ({self.kind})"
+
 
 class Ward(BaseModel):
     local_body = models.ForeignKey(LocalBody, on_delete=models.PROTECT)

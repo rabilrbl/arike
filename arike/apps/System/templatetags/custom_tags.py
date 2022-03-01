@@ -8,11 +8,12 @@ User = get_user_model()
 
 register = Library()
 
+
 @register.simple_tag(takes_context=True)
 def treatment(context, patient):
     context['treatments'] = Treatment.objects.filter(patient=patient)
     return ''
-    
+
 
 @register.simple_tag
 def filter_day(queryset, day):
