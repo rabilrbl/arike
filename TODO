@@ -1,24 +1,27 @@
 # Arike TODO
-MVP Approach - Something is better than nothing
-Focus on the core functionality of the application to work. Rest later
 
-## Use case Priority
-- [x] Authorization 
+## Important
+- [ ] Code Factoring
+- [ ] Flake8
+- [ ] Enable GH Actions
 
 ## High Priority
-- [ ] Schedules page
+- [ ] Dependent filters for wards (state -> district) : JS
+- [ ] Performance Improvement
+- [ ] Write test cases - Cover 90%
 
 ## Medium Priority
-- [ ] Celery tasks
+- [ ] UI/UX Improvement
 
 #### Low Priority
-- [ ] Form Design
-
----
-##### Extra Learning
-- [Django Floating Labels](https://www.youtube.com/watch?v=nJzKi6oIvBA)
+- [ ] None
 
 ---
 ###### Extra Features
 - [ ] None for now!
+---
+
+##### Learn
+- [Django Floating Labels](https://www.youtube.com/watch?v=nJzKi6oIvBA)
+
 ---
