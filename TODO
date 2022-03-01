@@ -7,6 +7,7 @@
 
 ## High Priority
 - [ ] Dependent filters for wards (state -> district) : JS
+- [ ] Place signal functions in signals.py
 - [ ] Performance Improvement
 - [ ] Write test cases - Cover 90%
 
