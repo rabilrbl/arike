@@ -278,7 +278,7 @@ if USE_TZ:
     # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-timezone
     CELERY_TIMEZONE = TIME_ZONE
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL = env("REDIS_URL", "redis://localhost:6379")
+CELERY_BROKER_URL = env('REDIS_URL', default="redis://localhost:6379")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-accept_content
@@ -337,7 +337,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
     "SERVERS": [
         {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
-        {"url": "https://arike.ga", "description": "Production server"},
+        {"url": "https://arikecare.herokuapp.com", "description": "Production server"},
     ],
 }
 # Your stuff...
