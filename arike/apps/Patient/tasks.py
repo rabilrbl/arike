@@ -1,5 +1,5 @@
 
-from django.core.mail import send_mass_mail
+from django.core.mail import send_mail
 
 from config import celery_app
 
@@ -29,5 +29,5 @@ Note:
     {visitdata['note']}\n
 Thank you,
     Arike'''
-    message = ((subject, message, 'arikecare@gmail.com', [fam['email']]) for fam in family)
-    return send_mass_mail(message, fail_silently=False)
+    for member in family:
+        send_mail(subject, message, 'arikecare@gmail.com', [member['email']], fail_silently=False)
