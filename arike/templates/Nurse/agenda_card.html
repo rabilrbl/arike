@@ -1,0 +1,17 @@
+<div class="bg-gray-50 px-6 py-4 rounded-xl space-y-2">
+    <div class="flex items-center">
+        <h3>{{ patient.full_name }}</h3>
+        <p class="ml-auto order-last">{{ agenda.date|date:"D d M Y" }}</p>
+    </div>
+    <p class="font-medium text-gray-600">{{ patient.address }}</p>
+    <p class="font-bold">{{ patient.calculate_age }} years old</p>
+    <a href="tel:{{ patient.phone_number }}">{{ patient.phone_number }}</a>
+    <div class="flex space-x-5">
+        <button onclick="document.location.href='{% url 'nurse:unschedule_visit' agenda.id %}?next={% url 'nurse:agenda' %}'" class="btn bg-gray-50 border-2 border-gray-700 text-gray-700 hover:text-white hover:bg-gray-700">
+            Unschedule
+        </button>
+        <button onclick="document.location.href='{% url 'nurse:visit_agenda' patient.id agenda.id %}'" class="btn">
+            Visit
+        </button>
+    </div>
+</div>

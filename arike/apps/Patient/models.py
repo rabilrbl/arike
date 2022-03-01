@@ -6,6 +6,11 @@ from arike.apps.Facility.models import Facility
 from datetime import date, datetime
 from django.contrib.auth import get_user_model
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from arike.apps.Patient.tasks import send_report_to_family_members
+from django.core import serializers
+
 User = get_user_model()
 
 # Create your models here.
@@ -114,13 +119,6 @@ class VisitSchedule(BaseModel):
         return self.patient.full_name + " - " + self.date.strftime("%d-%m-%Y") + " - " + self.time.strftime("%H:%M")
 
 
-class Symptoms(BaseModel):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
 PALLIATIVE_PHASE = (
     (1,"Stable"),
     (2,"Unstable"),
@@ -143,13 +141,12 @@ class VisitDetail(BaseModel):
     blood_pressure = models.IntegerField(blank=True, null=True)
     pulse = models.IntegerField(blank=True, null=True)
     general_random_blood_pressure = models.IntegerField(blank=True, null=True)
-    personal_hygiene = models.CharField(max_length=255, blank=True, null=True)
-    mouth_hygiene = models.CharField(max_length=255, blank=True, null=True)
-    public_hygiene = models.CharField(max_length=255, blank=True, null=True)
+    personal_hygiene = models.TextField(blank=True, null=True)
+    mouth_hygiene = models.TextField(blank=True, null=True)
+    public_hygiene = models.TextField(blank=True, null=True)
     systemic_examination = models.IntegerField(choices=SYSTEMIC_EXAMINATION, default=SYSTEMIC_EXAMINATION[0][0])
-    patient_at_peace = models.BooleanField(default=False)
+    patient_at_peace = models.BooleanField(default=False, choices=((True, "Yes"), (False, "No")))
     pain = models.BooleanField(default=False)
-    symptoms = models.ManyToManyField(Symptoms, blank=True)
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -167,7 +164,7 @@ class Treatment(BaseModel):
     care_sub_type = models.CharField(max_length=255, blank=True, null=True) 
 
     def __str__(self):
-        return self.patient.full_name + " - " + self.care_type
+        return self.care_type + " - " + self.care_sub_type
 
 
 class TreatmentNotes(BaseModel):
@@ -178,3 +175,31 @@ class TreatmentNotes(BaseModel):
 
     def __str__(self):
         return self.treatment.patient.full_name + " - " + self.treatment.care_type
+
+
+@receiver(post_save, sender=VisitDetail)
+def send_report_to_family_members_on_save(sender, instance, **kwargs):
+    print(f"Sending report to family members of {instance.visit_schedule.patient.full_name}..")
+    data = {
+        'full_name': instance.visit_schedule.patient.full_name,
+        'palliative_phase': instance.palliative_phase,
+        'blood_pressure': instance.blood_pressure,
+        'pulse': instance.pulse,
+        'general_random_blood_pressure': instance.general_random_blood_pressure,
+        'personal_hygiene': instance.personal_hygiene,
+        'mouth_hygiene': instance.mouth_hygiene,
+        'public_hygiene': instance.public_hygiene,
+        'systemic_examination': instance.systemic_examination,
+        'patient_at_peace': instance.get_patient_at_peace_display(),
+        'note': instance.note,
+    }
+    famdata = FamilyDetail.objects.filter(patient=instance.visit_schedule.patient)
+    family = []
+    for fam in famdata:
+        temp={
+            'full_name':fam.full_name,
+            'email': fam.email,
+        }
+        family.append(temp)
+
+    send_report_to_family_members.delay(data, family)

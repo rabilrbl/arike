@@ -90,7 +90,7 @@ class NewUser(PermissionRequiredMixin, CreateView):
                  You were added by the District Admin {self.request.user.full_name}.
                   If you are not {user.full_name} please contact us Immediately.
                    \n\n Thank you! \n Arike Team''',
-                from_email= "invite@arike.ga",
+                from_email= "arikecare@gmail.com",
                 recipient_list=[user.email],
                 fail_silently=False,
             )

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="max-w-3xl space-y-5">
+    <h1>Patient Health Information</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+            <button type="submit" class="btn">
+                Save
+            </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Visits</h1>
+    <div class="my-2 max-w-3xl space-y-5">
+        {% filter_day agenda "today" as todays %}
+            {% if todays %}
+            <div class="space-y-5">
+                <h1>Today</h1>
+                {% for agenda in todays %}
+                <div class="grid grid-cols-2 gap-4">{% include "Nurse/agenda_card.html" with patient=agenda.patient agenda=agenda %}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% filter_day agenda "tomorrow" as tomorrows %}
+            {% if tomorrows %}
+            <div class="space-y-5">
+                <h1>Tomorrow</h1>
+                {% for agenda in tomorrows %}
+                <div class="grid grid-cols-2 gap-4">{% include "Nurse/agenda_card.html" with patient=agenda.patient agenda=agenda %}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% filter_day agenda "all" as alls %}
+            {% if alls %}
+            <div class="space-y-5">
+                <h1>Later</h1>
+                {% for agenda in alls %}
+                <div class="grid grid-cols-2 gap-4">{% include "Nurse/agenda_card.html" with patient=agenda.patient agenda=agenda %}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+    </div>
+{% endblock %}

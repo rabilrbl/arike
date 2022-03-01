@@ -1,6 +1,4 @@
 
-# import GenericViews
-from dataclasses import field
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -11,7 +9,6 @@ from arike.apps.Patient.models import Patient
 from arike.users import choice_data as choices
 from django.contrib.admin import widgets
 from arike.apps.Patient.filters import PatientFilter
-# from arike.users.mixins import RoleRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class PatientIndexView(PermissionRequiredMixin, ListView):

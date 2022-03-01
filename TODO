@@ -3,7 +3,7 @@ MVP Approach - Something is better than nothing
 Focus on the core functionality of the application to work. Rest later
 
 ## Use case Priority
-- [ ] Authorization 
+- [x] Authorization 
 
 ## High Priority
 - [ ] Schedules page

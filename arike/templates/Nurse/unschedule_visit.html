@@ -1,0 +1,18 @@
+{% extends  "base.html" %}
+{% block content %}
+<div class="main space-y-3">
+    <h1>Delete Schedule</h1>
+    <p class="text-2xl">
+        You are <b>Unscheduling</b> visit with <b>{{ schedule.patient.full_name }}</b> on <b>{{ schedule.date|date:"D d M Y" }}</b>
+        <br>
+        Are you sure? Action Cannot be reversed
+    </p>
+    <div class="flex py-5">
+        <form action="" method="post" class="">
+            {% csrf_token %}
+            <button class="btn btn-danger px-8 py-3 mr-5 rounded-xl" type="submit">Unschedule</button>
+        </form>
+        <button class="btn btn-primary px-8 py-3 rounded-xl" onclick="history.back()">Cancel</button>
+    </div>
+</div>
+{% endblock %}

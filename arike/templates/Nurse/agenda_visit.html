@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="space-y-5 max-w-3xl">
+        <h1>Visits</h1>
+        <div class="grid grid-cols-2 gap-4">
+            <div onclick="document.location.href='{% url 'nurse:treatmentnote' patient_id pk %}'" class="bg-gray-50 px-6 py-16 flex items-center justify-center font-bold text-3xl rounded-xl hover:bg-gray-700 hover:text-gray-50 cursor-pointer transition duration-200 ease-in-out">Treatment Notes</div>
+            <div onclick="document.location.href='{% url 'nurse:healthinfo' pk %}'" class="bg-gray-50 px-6 py-16 flex items-center justify-center font-bold text-3xl rounded-xl hover:bg-gray-700 hover:text-gray-50 cursor-pointer transition duration-200 ease-in-out">Health Information</div>
+        </div>
+        <!-- Go to agenda button -->
+        <div class="flex justify-center">
+            <a href="{% url 'nurse:agenda' %}" class="btn">Go Back to Agenda</a>
+        </div>
+    </div>
+{% endblock %}

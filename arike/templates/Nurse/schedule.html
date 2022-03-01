@@ -6,15 +6,15 @@
         {% include "System/template_tags/head_search.html" with title="Schedule" btn_link=svisit %}
         {% include "System/template_tags/search_bar.html" %}
         <div class="grid grid-cols-2 gap-4 mt-2">
-            {% for s in schedules %}
+            {% for p in patients %}
             <div class="bg-gray-50 p-6 space-y-3 rounded-xl">
                 <div class="flex items-center">
-                    <h1>{{s.patient.full_name}}</h1>
-                    <span class="ml-auto order-last">{{ s.patient.ward.name }}</span>
+                    <h1>{{p.full_name}}</h1>
+                    <span class="ml-auto order-last">{{ p.ward.name }}</span>
                 </div>
-                <div class="ml-6 inline-block">
+                <div class="ml-6 inline-block text-lg text-gray-600">
                     <ul class="list-disc">
-                        {% treatment s.patient %}
+                        {% treatment p %}
                         {% for t in treatments %}
                             <li>{{t.care_sub_type}}</li>
                         {% endfor %}
