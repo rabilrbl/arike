@@ -182,14 +182,14 @@ def send_report_to_family_members_on_save(sender, instance, **kwargs):
     print(f"Sending report to family members of {instance.visit_schedule.patient.full_name}..")
     data = {
         'full_name': instance.visit_schedule.patient.full_name,
-        'palliative_phase': instance.palliative_phase,
+        'palliative_phase': instance.get_palliative_phase_display(),
         'blood_pressure': instance.blood_pressure,
         'pulse': instance.pulse,
         'general_random_blood_pressure': instance.general_random_blood_pressure,
         'personal_hygiene': instance.personal_hygiene,
         'mouth_hygiene': instance.mouth_hygiene,
         'public_hygiene': instance.public_hygiene,
-        'systemic_examination': instance.systemic_examination,
+        'systemic_examination': instance.get_systemic_examination_display(),
         'patient_at_peace': instance.get_patient_at_peace_display(),
         'note': instance.note,
     }
