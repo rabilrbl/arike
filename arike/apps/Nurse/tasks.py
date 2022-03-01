@@ -12,8 +12,9 @@ def send_email_report(report) -> None:
     task = VisitSchedule.objects.filter(user=user, deleted=False, date=datetime.now().date())
     print(f"Sending email reminder to {user.full_name}\n")
     patients = task.count()
+    # TODO : add more details   (treatment, note, etc)
     email_content = f"""
-        Hi {user.username},
+        Hi {user.full_name},
         \n\nYou have treated {patients} patients today.
         \n\nRegards,\nArike Team
     """
