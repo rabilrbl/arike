@@ -1,3 +1,4 @@
+from dataclasses import field
 from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 from django.contrib.auth import forms as admin_forms
@@ -21,8 +22,10 @@ class UserAdminCreationForm(admin_forms.UserCreationForm):
     class Meta(admin_forms.UserCreationForm.Meta):
         model = User
 
+        fields = ("email",)
+
         error_messages = {
-            "username": {"unique": _("This username has already been taken.")}
+            "email": {"unique": _("This email already exists.")}
         }
 
 
@@ -32,6 +35,7 @@ class UserSignupForm(SignupForm):
     Default fields will be added automatically.
     Check UserSocialSignupForm for accounts created from social.
     """
+
 
 
 class UserSocialSignupForm(SocialSignupForm):
