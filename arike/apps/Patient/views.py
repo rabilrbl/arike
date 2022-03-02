@@ -27,7 +27,7 @@ class PatientIndexView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.role == 1:
-            queryset = Patient.objects.filter(district=self.request.user.district)
+            queryset = Patient.objects.filter(ward__local_body__district=self.request.user.district)
         else:
             queryset = Patient.objects.filter(facility=self.request.user.facility)
         queryset = self.filter_queryset(queryset)
