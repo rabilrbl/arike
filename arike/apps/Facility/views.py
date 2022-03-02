@@ -56,16 +56,20 @@ class DetailViewFacility(PermissionRequiredMixin, DetailView):
 class CreateFacilityForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        className = """
+        px-4 py-3 rounded-xl border border-gray-400
+        focus:outline-none focus:border-gray-500 text-xl
+        """
         self.fields['name'].widget.attrs.update(
-            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+            {'class': className})
         self.fields['address'].widget.attrs.update(
-            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl', 'rows': '2'})
+            {'class': className, 'rows': '2'})
         self.fields['ward'].widget.attrs.update(
-            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+            {'class': className})
         self.fields['pincode'].widget.attrs.update(
-            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+            {'class': className})
         self.fields['phone'].widget.attrs.update(
-            {'class': 'px-4 py-3 rounded-xl border border-gray-400 focus:outline-none focus:border-gray-500 text-xl'})
+            {'class': className})
 
     class Meta:
         model = Facility
@@ -74,7 +78,7 @@ class CreateFacilityForm(ModelForm):
 
 class CreateFacility(PermissionRequiredMixin, CreateView):
     """
-    Create page for new Facility  
+    Create page for new Facility
     """
     form_class = CreateFacilityForm
     template_name = 'Facility/create_facility.html'

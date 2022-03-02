@@ -36,7 +36,9 @@ class Patient(BaseModel):
         Calculate age from date of birth
         """
         today = datetime.today()
-        return today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
+        return today.year - self.date_of_birth.year - (
+            (today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day)
+        )
 
 
 RELATION = (
@@ -152,7 +154,7 @@ class VisitDetail(BaseModel):
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.visit_schedule.patient.full_name + " - " + self.visit_schedule.date.strftime("%d-%m-%Y") + " - " + self.visit_schedule.time.strftime("%H:%M")
+        return self.visit_schedule.patient.full_name + " - " + self.visit_schedule.date.strftime("%d-%m-%Y") + " - " + self.visit_schedule.time.strftime("%H:%M")  # noqa: E501
 
 
 # Ref for treatments https://github.com/coronasafe/arike/blob/main/db/seeds/development/treatment.seeds.rb

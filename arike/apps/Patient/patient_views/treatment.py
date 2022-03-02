@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import ModelForm
 from django.views.generic import ListView

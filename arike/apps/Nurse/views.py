@@ -1,17 +1,23 @@
-from pydoc import cram
-from django.views.generic import ListView, View
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from arike.apps.Patient.models import VisitSchedule, Treatment, Patient, VisitDetail, TreatmentNotes
-from django.forms import ModelForm
-from arike.apps.Nurse.filters import TreatmentFilter
-# from arike.users.mixins import RoleRequiredMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from datetime import datetime, timedelta
-from django.shortcuts import render
+from datetime import datetime
+
 from django import forms
 from django.contrib.admin import widgets
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.forms import ModelForm
+from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic import ListView, View
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from arike.apps.Nurse.filters import TreatmentFilter
 from arike.apps.Nurse.models import Reports
+from arike.apps.Patient.models import (
+    Patient,
+    Treatment,
+    TreatmentNotes,
+    VisitDetail,
+    VisitSchedule,
+)
 
 
 class ScheduleList(PermissionRequiredMixin, ListView):
@@ -27,7 +33,7 @@ class ScheduleList(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         queryset = Patient.objects.all()
         return self.filter_queryset(queryset)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Schedule'
@@ -44,7 +50,7 @@ class ScheduleVisitForm(ModelForm):
         fields = ['patient', 'date', 'time', 'duration']
 
 
-class ScheduleVisit(PermissionRequiredMixin,CreateView):
+class ScheduleVisit(PermissionRequiredMixin, CreateView):
     template_name = 'Nurse/schedule_visit.html'
     form_class = ScheduleVisitForm
     context_object_name = 'schedule'
@@ -78,8 +84,7 @@ class UnscheduleVisit(PermissionRequiredMixin, DeleteView):
         return context
 
 
-
-class AgendaView(PermissionRequiredMixin,ListView):
+class AgendaView(PermissionRequiredMixin, ListView):
     model = VisitSchedule
     template_name = 'Nurse/agenda.html'
     context_object_name = 'agenda'
@@ -88,14 +93,14 @@ class AgendaView(PermissionRequiredMixin,ListView):
 
     def get_queryset(self):
         queryset = VisitSchedule.objects.filter(
-                user=self.request.user, date__gte=datetime.today().date()
-            ).order_by(
-                'date', 'time'
-            ).exclude(
-                id__in=VisitDetail.objects.filter(
-                    visit_schedule__user=self.request.user, 
-                    visit_schedule__date__gte=datetime.today().date()
-                ).values('visit_schedule'))
+            user=self.request.user, date__gte=datetime.today().date()
+        ).order_by(
+            'date', 'time'
+        ).exclude(
+            id__in=VisitDetail.objects.filter(
+                visit_schedule__user=self.request.user,
+                visit_schedule__date__gte=datetime.today().date()
+            ).values('visit_schedule'))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -104,7 +109,7 @@ class AgendaView(PermissionRequiredMixin,ListView):
         return context
 
 
-class VisitAgendaView(PermissionRequiredMixin,View):
+class VisitAgendaView(PermissionRequiredMixin, View):
     permission_required = 'Patient.view_visitschedule'
 
     def get(self, request, *args, **kwargs):
@@ -114,7 +119,8 @@ class VisitAgendaView(PermissionRequiredMixin,View):
 class HealthInfoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['patient_at_peace'] = forms.ChoiceField(widget=widgets.AdminRadioSelect, choices=((True, 'Yes'), (False, 'No')))
+        self.fields['patient_at_peace'] = forms.ChoiceField(
+            widget=widgets.AdminRadioSelect, choices=((True, 'Yes'), (False, 'No')))
         self.fields['patient_at_peace'].label = 'Is the patient at peace?'
         self.fields['note'].widget.attrs['rows'] = 3
         self.fields['public_hygiene'].widget.attrs['rows'] = 3
@@ -123,9 +129,14 @@ class HealthInfoForm(ModelForm):
 
     class Meta:
         model = VisitDetail
-        fields = ['palliative_phase','blood_pressure','pulse','general_random_blood_pressure','patient_at_peace','public_hygiene','personal_hygiene','mouth_hygiene','systemic_examination','note']
+        fields = [
+            'palliative_phase', 'blood_pressure', 'pulse', 'general_random_blood_pressure',
+            'patient_at_peace', 'public_hygiene', 'personal_hygiene', 'mouth_hygiene',
+            'systemic_examination', 'note'
+        ]
 
-class HealthInfoView(PermissionRequiredMixin,CreateView):
+
+class HealthInfoView(PermissionRequiredMixin, CreateView):
     form_class = HealthInfoForm
     template_name = 'Nurse/health_info.html'
     context_object_name = 'health_info'
@@ -155,7 +166,7 @@ class TreatmentNoteForm(ModelForm):
         fields = ['note', 'treatment']
 
 
-class TreatmentNoteView(PermissionRequiredMixin,CreateView):
+class TreatmentNoteView(PermissionRequiredMixin, CreateView):
     form_class = TreatmentNoteForm
     template_name = 'Nurse/treatment_note.html'
     context_object_name = 'treatment_note'
@@ -210,4 +221,3 @@ class ReportsConsentView(PermissionRequiredMixin, UpdateView):
         time = self.request.POST['time'].split(":")
         form.instance.last_sent = form.instance.last_sent.replace(hour=int(time[0]), minute=int(time[1]))
         return super().form_valid(form)
-    

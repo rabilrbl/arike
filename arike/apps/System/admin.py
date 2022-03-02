@@ -1,5 +1,6 @@
 from django.contrib import admin
-from arike.apps.System.models import *
+
+from arike.apps.System.models import District, LocalBody, State
 
 # Register your models here.
 admin.site.register(District)

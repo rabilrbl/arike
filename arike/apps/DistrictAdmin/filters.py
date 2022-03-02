@@ -1,10 +1,10 @@
-from django_filters import FilterSet, OrderingFilter
 from django.contrib.auth import get_user_model
+from django_filters import FilterSet, OrderingFilter
 
 User = get_user_model()
 
 INPUTCLASS = """textinput w-full rounded-lg block bg-white text-gray-700
-    focus:outline-none appearance-none leading-normal py-2 border px-4 
+    focus:outline-none appearance-none leading-normal py-2 border px-4
     border-gray-300 mb-2"""
 
 

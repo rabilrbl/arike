@@ -1,6 +1,16 @@
 from django.contrib import admin
 
-from arike.apps.Patient.models import *
+from arike.apps.Patient.models import (
+    Disease,
+    FamilyDetail,
+    Patient,
+    PatientDisease,
+    Treatment,
+    TreatmentNotes,
+    VisitDetail,
+    VisitSchedule,
+    Ward,
+)
 
 # Register your models here.
 # Register all models from facility app

@@ -1,8 +1,9 @@
-from django.template import Library
-from arike.apps.Patient.models import Treatment
-from arike.apps.System.models import Ward
-from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
+
+from django.contrib.auth import get_user_model
+from django.template import Library
+
+from arike.apps.Patient.models import Treatment
 
 User = get_user_model()
 

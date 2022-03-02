@@ -39,7 +39,7 @@ class User(AbstractUser, BaseModel):
     objects = CustomUserManager()
 
     def save(self, *args, **kwargs):
-        if not self.facility is None:
+        if self.facility is not None:
             self.district = self.facility.ward.local_body.district
         if not self.username:
             self.username = self.get_random_username()

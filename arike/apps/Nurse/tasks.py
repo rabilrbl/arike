@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from pytz import timezone
 
 from arike.apps.Nurse.models import Reports
-from arike.apps.Patient.models import Treatment, VisitSchedule
+from arike.apps.Patient.models import VisitSchedule
 from config import celery_app
 
 

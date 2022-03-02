@@ -10,22 +10,22 @@ def send_report_to_family_members(instance, family, **kwargs):
     subject = 'Patient Visit Report from Arike'
     message = f'''Dear Family member,
 This is your patient {visitdata['full_name']} visit report.
-Palliative Phase: 
+Palliative Phase:
     {visitdata['palliative_phase']}
-Blood Pressure: 
+Blood Pressure:
     {visitdata['blood_pressure']}
 Pulse Rate: {visitdata['pulse']}
 General Random Blood Pressure: {visitdata['general_random_blood_pressure']}
 Patient at Peace: {visitdata['patient_at_peace']}
-Public Hygiene: 
+Public Hygiene:
     {visitdata['public_hygiene']}
 Personal Hygiene:
     {visitdata['personal_hygiene']}
-Mouth Hygiene: 
+Mouth Hygiene:
     {visitdata['mouth_hygiene']}
-Systemic Examination: 
+Systemic Examination:
     {visitdata['systemic_examination']}
-Note: 
+Note:
     {visitdata['note']}\n
 Thank you,
     Arike'''

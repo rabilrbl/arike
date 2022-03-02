@@ -25,7 +25,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = _("Information successfully updated")
 
     def get_success_url(self):
-        assert (
+        assert ( # noqa F631
             self.request.user.is_authenticated,
             self.request.user.is_verified
         )  # for mypy to know that the user is authenticated

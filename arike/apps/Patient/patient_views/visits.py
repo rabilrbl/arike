@@ -1,11 +1,11 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from arike.apps.Patient.models import VisitDetail
-from arike.apps.Patient.models import Patient
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
+from arike.apps.Patient.models import Patient, VisitDetail
 
 
-class VisitHistory(PermissionRequiredMixin,ListView):
+class VisitHistory(PermissionRequiredMixin, ListView):
     model = VisitDetail
     template_name = 'Patient/visits/history.html'
     context_object_name = 'visits'
@@ -21,7 +21,7 @@ class VisitHistory(PermissionRequiredMixin,ListView):
         context['patient'] = Patient.objects.get(pk=self.kwargs['pk'])
         return context
 
-    
+
 class VisitDetailView(PermissionRequiredMixin, DetailView):
     model = VisitDetail
     template_name = 'Patient/visits/detail.html'

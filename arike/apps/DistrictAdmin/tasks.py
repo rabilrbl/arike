@@ -1,5 +1,6 @@
-from config import celery_app
 from django.core.mail import send_mail
+
+from config import celery_app
 
 
 @celery_app.task(retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})

@@ -50,8 +50,15 @@ class DiseaseCreate(PermissionRequiredMixin, CreateView):
         if form.is_valid():
             p = PatientDisease.objects.filter(disease=form.instance).first()
             if not p:
-                p = PatientDisease.objects.create(patient=Patient.objects.get(pk=self.kwargs['pk']), disease=Disease.objects.create(
-                    name=form.instance.name, icds_code=form.instance.icds_code), user=self.request.user, note=form.data['note'])
+                p = PatientDisease.objects.create(
+                    patient=Patient.objects.get(pk=self.kwargs['pk']),
+                    disease=Disease.objects.create(
+                        name=form.instance.name,
+                        icds_code=form.instance.icds_code
+                    ),
+                    user=self.request.user,
+                    note=form.data['note']
+                )
         return HttpResponseRedirect(self.get_success_url())
 
     def form_success(self, form):
