@@ -14,6 +14,7 @@ from django.views.generic.list import ListView
 
 from arike.apps.DistrictAdmin.filters import UserFilter
 from arike.apps.DistrictAdmin.tasks import send_email
+from allauth.account.models import EmailAddress
 
 User = get_user_model()
 
@@ -148,11 +149,14 @@ class UserDeleteView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('distadmin:users')
 
     permission_required = 'users.delete_user'
-
+    
     def form_valid(self, form):
         if form.is_valid():
+            # Print success popup message
             messages.success(self.request, 'User Successfully Deleted')
-            return super().form_valid(form)
+            # Delete email from allauth EmailAddress model
+            EmailAddress.objects.get(user=self.get_object()).delete()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
