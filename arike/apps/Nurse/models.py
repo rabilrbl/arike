@@ -18,7 +18,8 @@ class Reports(BaseModel):
         default=datetime(
             datetime.today().year,
             datetime.today().month,
-            datetime.today().day),
+            datetime.today().day
+        ),
         help_text="Choose time"
     )
     consent = models.BooleanField(
