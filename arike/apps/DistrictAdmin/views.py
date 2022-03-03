@@ -78,6 +78,9 @@ class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
 
     # send email confirmation on user is created
     def form_valid(self, form):
+        if User.objects.filter(email=form.instance.email).exists():
+            form.add_error('email', 'User with this email already exists!')
+            return super().form_invalid(form)
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
@@ -157,6 +160,7 @@ class UserDeleteView(PermissionRequiredMixin, DeleteView):
             # Delete email from allauth EmailAddress model
             EmailAddress.objects.get(user=self.get_object()).delete()
         return super().form_valid(form)
+            
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
