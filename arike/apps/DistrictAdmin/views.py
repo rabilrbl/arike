@@ -1,4 +1,3 @@
-
 from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
 from allauth.account.utils import user_pk_to_url_str
 from allauth.utils import build_absolute_uri
@@ -6,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from django.urls import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -66,6 +65,12 @@ class NewUserForm(ModelForm):
         model = User
         fields = ['full_name', 'email', 'facility', 'role']
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise ValidationError('User with this email already exists!')
+        return email
+
 
 class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = NewUserForm
@@ -78,9 +83,6 @@ class NewUser(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
 
     # send email confirmation on user is created
     def form_valid(self, form):
-        if User.objects.filter(email=form.instance.email).exists():
-            form.add_error('email', 'User with this email already exists!')
-            return super().form_invalid(form)
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
