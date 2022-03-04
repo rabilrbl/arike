@@ -7,14 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Facility', '0005_alter_facility_ward'),
-        ('users', '0011_alter_user_role'),
+        ("Facility", "0005_alter_facility_ward"),
+        ("users", "0011_alter_user_role"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='facility',
-            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.PROTECT, to='Facility.facility'),
+            model_name="user",
+            name="facility",
+            field=models.ForeignKey(
+                default=None,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="Facility.facility",
+            ),
         ),
     ]

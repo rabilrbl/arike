@@ -8,29 +8,31 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0004_alter_user_role'),
+        ("users", "0004_alter_user_role"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="user",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='user',
-            name='deleted',
+            model_name="user",
+            name="deleted",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='user',
-            name='external_id',
+            model_name="user",
+            name="external_id",
             field=models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
         ),
         migrations.AddField(
-            model_name='user',
-            name='updated_at',
+            model_name="user",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

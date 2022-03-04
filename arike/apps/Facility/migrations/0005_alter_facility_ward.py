@@ -7,14 +7,16 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('System', '0001_initial'),
-        ('Facility', '0004_alter_facility_phone'),
+        ("System", "0001_initial"),
+        ("Facility", "0004_alter_facility_phone"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='facility',
-            name='ward',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='System.ward'),
+            model_name="facility",
+            name="ward",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="System.ward"
+            ),
         ),
     ]

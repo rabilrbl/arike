@@ -6,18 +6,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Patient', '0006_disease_symptoms_treatment_visitschedule_visitdetail_and_more'),
+        (
+            "Patient",
+            "0006_disease_symptoms_treatment_visitschedule_visitdetail_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='familydetail',
-            name='education',
-            field=models.IntegerField(choices=[(1, 'School'), (2, 'College'), (3, 'Graduate'), (4, 'Post Graduate'), (5, 'Doctorate'), (6, 'Other')], default=6),
+            model_name="familydetail",
+            name="education",
+            field=models.IntegerField(
+                choices=[
+                    (1, "School"),
+                    (2, "College"),
+                    (3, "Graduate"),
+                    (4, "Post Graduate"),
+                    (5, "Doctorate"),
+                    (6, "Other"),
+                ],
+                default=6,
+            ),
         ),
         migrations.AlterField(
-            model_name='familydetail',
-            name='relation',
-            field=models.IntegerField(choices=[(1, 'Father'), (2, 'Mother'), (3, 'Brother'), (4, 'Sister'), (5, 'Spouse'), (6, 'Child'), (7, 'Grandfather'), (8, 'Grandmother'), (9, 'Other')], default=9),
+            model_name="familydetail",
+            name="relation",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Father"),
+                    (2, "Mother"),
+                    (3, "Brother"),
+                    (4, "Sister"),
+                    (5, "Spouse"),
+                    (6, "Child"),
+                    (7, "Grandfather"),
+                    (8, "Grandmother"),
+                    (9, "Other"),
+                ],
+                default=9,
+            ),
         ),
     ]

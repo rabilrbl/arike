@@ -7,14 +7,14 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0014_alter_user_role'),
+        ("users", "0014_alter_user_role"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='user',
+            name="user",
             managers=[
-                ('objects', arike.users.models.CustomUserManager()),
+                ("objects", arike.users.models.CustomUserManager()),
             ],
         ),
     ]

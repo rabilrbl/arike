@@ -23,15 +23,26 @@ class User(AbstractUser, BaseModel):
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
 
-    district = models.ForeignKey(District, on_delete=models.PROTECT, null=True, default=None)
-    facility = models.ForeignKey(Facility, verbose_name=_("Assign Facility"),
-                                 on_delete=models.PROTECT, null=True, default=None)
+    district = models.ForeignKey(
+        District, on_delete=models.PROTECT, null=True, default=None
+    )
+    facility = models.ForeignKey(
+        Facility,
+        verbose_name=_("Assign Facility"),
+        on_delete=models.PROTECT,
+        null=True,
+        default=None,
+    )
 
     #: First and last name do not cover name patterns around the globe
     full_name = models.CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore
     last_name = None  # type: ignore
-    role = models.IntegerField(choices=choices.UserRole, default=choices.UserRole[2][0], verbose_name=_("User Role"))
+    role = models.IntegerField(
+        choices=choices.UserRole,
+        default=choices.UserRole[2][0],
+        verbose_name=_("User Role"),
+    )
     is_verified = models.BooleanField(default=False)
     phone = models.CharField(max_length=11, blank=True)
     gender = models.IntegerField(choices=choices.GENDER, default=choices.GENDER[2][0])
@@ -52,9 +63,7 @@ class User(AbstractUser, BaseModel):
             str: Random username.
 
         """
-        username = "".join(
-            random.choices(string.ascii_lowercase + string.digits, k=10)
-        )
+        username = "".join(random.choices(string.ascii_lowercase + string.digits, k=10))
         while self.__class__.objects.filter(username=username).exists():
             username = "".join(
                 random.choices(string.ascii_lowercase + string.digits, k=10)

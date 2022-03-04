@@ -9,14 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('Patient', '0011_alter_treatment_care_sub_type_and_more'),
+        ("Patient", "0011_alter_treatment_care_sub_type_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='treatment',
-            name='user',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="treatment",
+            name="user",
+            field=models.ForeignKey(
+                default=None,
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

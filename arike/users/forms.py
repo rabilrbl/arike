@@ -23,9 +23,7 @@ class UserAdminCreationForm(admin_forms.UserCreationForm):
 
         fields = ("email",)
 
-        error_messages = {
-            "email": {"unique": _("This email already exists.")}
-        }
+        error_messages = {"email": {"unique": _("This email already exists.")}}
 
 
 class UserSignupForm(SignupForm):

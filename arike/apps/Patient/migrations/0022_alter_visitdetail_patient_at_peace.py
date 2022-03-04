@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Patient', '0021_alter_visitdetail_mouth_hygiene_and_more'),
+        ("Patient", "0021_alter_visitdetail_mouth_hygiene_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='visitdetail',
-            name='patient_at_peace',
-            field=models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=False),
+            model_name="visitdetail",
+            name="patient_at_peace",
+            field=models.BooleanField(
+                choices=[(True, "Yes"), (False, "No")], default=False
+            ),
         ),
     ]

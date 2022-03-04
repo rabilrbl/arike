@@ -17,7 +17,7 @@ User = get_user_model()
 
 class Patient(BaseModel):
     ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-    facility = models.ForeignKey(Facility, on_delete=models.PROTECT,  default="")
+    facility = models.ForeignKey(Facility, on_delete=models.PROTECT, default="")
 
     full_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
@@ -36,30 +36,35 @@ class Patient(BaseModel):
         Calculate age from date of birth
         """
         today = datetime.today()
-        return today.year - self.date_of_birth.year - (
-            (today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day)
+        return (
+            today.year
+            - self.date_of_birth.year
+            - (
+                (today.month, today.day)
+                < (self.date_of_birth.month, self.date_of_birth.day)
+            )
         )
 
 
 RELATION = (
-    (1, 'Father'),
-    (2, 'Mother'),
-    (3, 'Brother'),
-    (4, 'Sister'),
-    (5, 'Spouse'),
-    (6, 'Child'),
-    (7, 'Grandfather'),
-    (8, 'Grandmother'),
-    (9, 'Other'),
+    (1, "Father"),
+    (2, "Mother"),
+    (3, "Brother"),
+    (4, "Sister"),
+    (5, "Spouse"),
+    (6, "Child"),
+    (7, "Grandfather"),
+    (8, "Grandmother"),
+    (9, "Other"),
 )
 
 EDUCATION = (
-    (1, 'School'),
-    (2, 'College'),
-    (3, 'Graduate'),
-    (4, 'Post Graduate'),
-    (5, 'Doctorate'),
-    (6, 'Other'),
+    (1, "School"),
+    (2, "College"),
+    (3, "Graduate"),
+    (4, "Post Graduate"),
+    (5, "Doctorate"),
+    (6, "Other"),
 )
 
 ICDS_CODE = (
@@ -70,7 +75,7 @@ ICDS_CODE = (
     ("DM-62", "Dementia"),
     ("CAV-89", "CVA"),
     ("C-98", "Cancer"),
-    ("DC-25", "CKD")
+    ("DC-25", "CKD"),
 )
 
 
@@ -141,27 +146,42 @@ SYSTEMIC_EXAMINATION = (
 class VisitDetail(BaseModel):
     visit_schedule = models.ForeignKey(VisitSchedule, on_delete=models.PROTECT)
 
-    palliative_phase = models.IntegerField(choices=PALLIATIVE_PHASE, default=PALLIATIVE_PHASE[0][0])
+    palliative_phase = models.IntegerField(
+        choices=PALLIATIVE_PHASE, default=PALLIATIVE_PHASE[0][0]
+    )
     blood_pressure = models.IntegerField(blank=True, null=True)
     pulse = models.IntegerField(blank=True, null=True)
     general_random_blood_pressure = models.IntegerField(blank=True, null=True)
     personal_hygiene = models.TextField(blank=True, null=True)
     mouth_hygiene = models.TextField(blank=True, null=True)
     public_hygiene = models.TextField(blank=True, null=True)
-    systemic_examination = models.IntegerField(choices=SYSTEMIC_EXAMINATION, default=SYSTEMIC_EXAMINATION[0][0])
-    patient_at_peace = models.BooleanField(default=False, choices=((True, "Yes"), (False, "No")))
+    systemic_examination = models.IntegerField(
+        choices=SYSTEMIC_EXAMINATION, default=SYSTEMIC_EXAMINATION[0][0]
+    )
+    patient_at_peace = models.BooleanField(
+        default=False, choices=((True, "Yes"), (False, "No"))
+    )
     pain = models.BooleanField(default=False)
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.visit_schedule.patient.full_name + " - " + self.visit_schedule.date.strftime("%d-%m-%Y") + " - " + self.visit_schedule.time.strftime("%H:%M")  # noqa: E501
+        return (
+            self.visit_schedule.patient.full_name
+            + " - "
+            + self.visit_schedule.date.strftime("%d-%m-%Y")
+            + " - "
+            + self.visit_schedule.time.strftime("%H:%M")
+        )  # noqa: E501
 
 
 # Ref for treatments https://github.com/coronasafe/arike/blob/main/db/seeds/development/treatment.seeds.rb
 
+
 class Treatment(BaseModel):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
+    user = models.ForeignKey(
+        User, on_delete=models.PROTECT, null=True, blank=True, default=None
+    )
 
     description = models.TextField()
     care_type = models.CharField(max_length=255, blank=True, null=True)
@@ -183,29 +203,31 @@ class TreatmentNotes(BaseModel):
 
 @receiver(post_save, sender=VisitDetail)
 def send_report_to_family_members_on_save(sender, instance, **kwargs):
-    print(f"Sending report to family members of {instance.visit_schedule.patient.full_name}..")
+    print(
+        f"Sending report to family members of {instance.visit_schedule.patient.full_name}.."
+    )
     # Hardcoding data & famdata because I got error when I tried to to use model.values()
     # TODO : Fix this
     # Data to be sent to family members
     data = {
-        'full_name': instance.visit_schedule.patient.full_name,
-        'palliative_phase': instance.get_palliative_phase_display(),
-        'blood_pressure': instance.blood_pressure,
-        'pulse': instance.pulse,
-        'general_random_blood_pressure': instance.general_random_blood_pressure,
-        'personal_hygiene': instance.personal_hygiene,
-        'mouth_hygiene': instance.mouth_hygiene,
-        'public_hygiene': instance.public_hygiene,
-        'systemic_examination': instance.get_systemic_examination_display(),
-        'patient_at_peace': instance.get_patient_at_peace_display(),
-        'note': instance.note,
+        "full_name": instance.visit_schedule.patient.full_name,
+        "palliative_phase": instance.get_palliative_phase_display(),
+        "blood_pressure": instance.blood_pressure,
+        "pulse": instance.pulse,
+        "general_random_blood_pressure": instance.general_random_blood_pressure,
+        "personal_hygiene": instance.personal_hygiene,
+        "mouth_hygiene": instance.mouth_hygiene,
+        "public_hygiene": instance.public_hygiene,
+        "systemic_examination": instance.get_systemic_examination_display(),
+        "patient_at_peace": instance.get_patient_at_peace_display(),
+        "note": instance.note,
     }
     famdata = FamilyDetail.objects.filter(patient=instance.visit_schedule.patient)
     family = []
     for fam in famdata:
         temp = {
-            'full_name': fam.full_name,
-            'email': fam.email,
+            "full_name": fam.full_name,
+            "email": fam.email,
         }
         family.append(temp)
 

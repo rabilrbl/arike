@@ -17,19 +17,50 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Reports',
+            name="Reports",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('last_sent', models.DateTimeField(blank=True, default=datetime.datetime(2022, 2, 28, 0, 0), help_text='Choose time', null=True)),
-                ('consent', models.BooleanField(default=False, help_text='Check this box if you want to receive the report')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                (
+                    "last_sent",
+                    models.DateTimeField(
+                        blank=True,
+                        default=datetime.datetime(2022, 2, 28, 0, 0),
+                        help_text="Choose time",
+                        null=True,
+                    ),
+                ),
+                (
+                    "consent",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Check this box if you want to receive the report",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

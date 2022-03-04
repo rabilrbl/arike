@@ -35,6 +35,7 @@ class BaseModel(models.Model):
     """
     Base model for all models.
     """
+
     # Common fields
     external_id = models.UUIDField(default=uuid4, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -61,6 +62,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
 
 # Models
 

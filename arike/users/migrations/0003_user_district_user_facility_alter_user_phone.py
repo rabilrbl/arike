@@ -7,25 +7,33 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Facility', '0004_alter_facility_phone'),
-        ('System', '0001_initial'),
-        ('users', '0002_rename_name_user_full_name_user_gender_and_more'),
+        ("Facility", "0004_alter_facility_phone"),
+        ("System", "0001_initial"),
+        ("users", "0002_rename_name_user_full_name_user_gender_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='district',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.PROTECT, to='System.district'),
+            model_name="user",
+            name="district",
+            field=models.ForeignKey(
+                default="",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="System.district",
+            ),
         ),
         migrations.AddField(
-            model_name='user',
-            name='facility',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.PROTECT, to='Facility.facility'),
+            model_name="user",
+            name="facility",
+            field=models.ForeignKey(
+                default="",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="Facility.facility",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='phone',
+            model_name="user",
+            name="phone",
             field=models.CharField(blank=True, max_length=11),
         ),
     ]

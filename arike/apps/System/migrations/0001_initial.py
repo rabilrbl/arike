@@ -9,74 +9,147 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='District',
+            name="District",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='LocalBody',
+            name="LocalBody",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=255)),
-                ('kind', models.IntegerField(choices=[(1, 'Grama Panchayath'), (2, 'Block Panchayath'), (3, 'District Panchayath'), (4, 'Nagar Panchayath'), (10, 'Municipality'), (20, 'Corporation'), (50, 'Others')])),
-                ('local_body_code', models.CharField(blank=True, max_length=20, null=True)),
-                ('district', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='System.district')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "kind",
+                    models.IntegerField(
+                        choices=[
+                            (1, "Grama Panchayath"),
+                            (2, "Block Panchayath"),
+                            (3, "District Panchayath"),
+                            (4, "Nagar Panchayath"),
+                            (10, "Municipality"),
+                            (20, "Corporation"),
+                            (50, "Others"),
+                        ]
+                    ),
+                ),
+                (
+                    "local_body_code",
+                    models.CharField(blank=True, max_length=20, null=True),
+                ),
+                (
+                    "district",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="System.district",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='State',
+            name="State",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Ward',
+            name="Ward",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=255)),
-                ('number', models.CharField(max_length=50)),
-                ('local_body', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='System.localbody')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=255)),
+                ("number", models.CharField(max_length=50)),
+                (
+                    "local_body",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="System.localbody",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='district',
-            name='state',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='System.state'),
+            model_name="district",
+            name="state",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="System.state"
+            ),
         ),
     ]

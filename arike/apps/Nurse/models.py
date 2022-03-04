@@ -14,18 +14,20 @@ class Reports(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     last_sent = models.DateTimeField(
-        blank=True, null=True,
+        blank=True,
+        null=True,
         default=datetime(
-            datetime.today().year,
-            datetime.today().month,
-            datetime.today().day
+            datetime.today().year, datetime.today().month, datetime.today().day
         ),
-        help_text="Choose time"
+        help_text="Choose time",
     )
     consent = models.BooleanField(
-        default=False,
-        help_text="Check this box if you want to receive the report"
+        default=False, help_text="Check this box if you want to receive the report"
     )
 
     def __str__(self):
-        return self.user.username + " Last Sent: " + self.last_sent.strftime("%d-%m-%Y %H:%M")
+        return (
+            self.user.username
+            + " Last Sent: "
+            + self.last_sent.strftime("%d-%m-%Y %H:%M")
+        )

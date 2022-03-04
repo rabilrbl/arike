@@ -7,35 +7,41 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Facility', '0004_alter_facility_phone'),
-        ('System', '0001_initial'),
-        ('Patient', '0001_initial'),
+        ("Facility", "0004_alter_facility_phone"),
+        ("System", "0001_initial"),
+        ("Patient", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='patient',
-            name='facility',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.PROTECT, to='Facility.facility'),
+            model_name="patient",
+            name="facility",
+            field=models.ForeignKey(
+                default="",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="Facility.facility",
+            ),
         ),
         migrations.AlterField(
-            model_name='patient',
-            name='emergency_phone_number',
+            model_name="patient",
+            name="emergency_phone_number",
             field=models.CharField(max_length=11),
         ),
         migrations.AlterField(
-            model_name='patient',
-            name='landmark',
+            model_name="patient",
+            name="landmark",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AlterField(
-            model_name='patient',
-            name='phone',
+            model_name="patient",
+            name="phone",
             field=models.CharField(blank=True, max_length=11, null=True),
         ),
         migrations.AlterField(
-            model_name='patient',
-            name='ward',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='System.ward'),
+            model_name="patient",
+            name="ward",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="System.ward"
+            ),
         ),
     ]

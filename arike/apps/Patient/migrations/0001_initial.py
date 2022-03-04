@@ -10,30 +10,51 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('System', '0001_initial'),
+        ("System", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Patient',
+            name="Patient",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('external_id', models.UUIDField(db_index=True, default=uuid.uuid4, unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(default=False)),
-                ('full_name', models.CharField(max_length=255)),
-                ('date_of_birth', models.DateField()),
-                ('address', models.CharField(max_length=255)),
-                ('landmark', models.CharField(max_length=255)),
-                ('gender', models.IntegerField(choices=[(1, 'Male'), (2, 'Female'), (3, 'Other')], default=3)),
-                ('phone', models.CharField(max_length=10)),
-                ('emergency_phone_number', models.CharField(max_length=10)),
-                ('expired_time', models.DateTimeField(blank=True, null=True)),
-                ('ward', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='System.ward')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "external_id",
+                    models.UUIDField(db_index=True, default=uuid.uuid4, unique=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("deleted", models.BooleanField(default=False)),
+                ("full_name", models.CharField(max_length=255)),
+                ("date_of_birth", models.DateField()),
+                ("address", models.CharField(max_length=255)),
+                ("landmark", models.CharField(max_length=255)),
+                (
+                    "gender",
+                    models.IntegerField(
+                        choices=[(1, "Male"), (2, "Female"), (3, "Other")], default=3
+                    ),
+                ),
+                ("phone", models.CharField(max_length=10)),
+                ("emergency_phone_number", models.CharField(max_length=10)),
+                ("expired_time", models.DateTimeField(blank=True, null=True)),
+                (
+                    "ward",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="System.ward"
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

@@ -7,13 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Nurse', '0002_alter_reports_last_sent'),
+        ("Nurse", "0002_alter_reports_last_sent"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reports',
-            name='last_sent',
-            field=models.DateTimeField(blank=True, default=datetime.datetime(2022, 3, 2, 0, 0), help_text='Choose time', null=True),
+            model_name="reports",
+            name="last_sent",
+            field=models.DateTimeField(
+                blank=True,
+                default=datetime.datetime(2022, 3, 2, 0, 0),
+                help_text="Choose time",
+                null=True,
+            ),
         ),
     ]

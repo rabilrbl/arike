@@ -6,33 +6,43 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='user',
-            old_name='name',
-            new_name='full_name',
+            model_name="user",
+            old_name="name",
+            new_name="full_name",
         ),
         migrations.AddField(
-            model_name='user',
-            name='gender',
-            field=models.IntegerField(choices=[(1, 'Male'), (2, 'Female'), (3, 'Other')], default=3),
+            model_name="user",
+            name="gender",
+            field=models.IntegerField(
+                choices=[(1, "Male"), (2, "Female"), (3, "Other")], default=3
+            ),
         ),
         migrations.AddField(
-            model_name='user',
-            name='is_verified',
+            model_name="user",
+            name="is_verified",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='user',
-            name='phone',
+            model_name="user",
+            name="phone",
             field=models.CharField(blank=True, max_length=10),
         ),
         migrations.AddField(
-            model_name='user',
-            name='role',
-            field=models.CharField(choices=[('da', 'Superuser'), ('pn', 'Primary Nurse'), ('an', 'Secondary Nurse')], default='pn', max_length=3),
+            model_name="user",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("da", "Superuser"),
+                    ("pn", "Primary Nurse"),
+                    ("an", "Secondary Nurse"),
+                ],
+                default="pn",
+                max_length=3,
+            ),
         ),
     ]

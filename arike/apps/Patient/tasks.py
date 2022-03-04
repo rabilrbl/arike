@@ -1,14 +1,15 @@
-
 from django.core.mail import send_mail
 
 from config import celery_app
 
 
-@celery_app.task(retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
+@celery_app.task(
+    retry_backoff=True, autoretry_for=(Exception,), retry_kwargs={"max_retries": 3}
+)
 def send_report_to_family_members(instance, family, **kwargs):
     visitdata = instance
-    subject = 'Patient Visit Report from Arike'
-    message = f'''Dear Family member,
+    subject = "Patient Visit Report from Arike"
+    message = f"""Dear Family member,
 This is your patient {visitdata['full_name']} visit report.
 Palliative Phase:
     {visitdata['palliative_phase']}
@@ -28,6 +29,12 @@ Systemic Examination:
 Note:
     {visitdata['note']}\n
 Thank you,
-    Arike'''
+    Arike"""
     for member in family:
-        send_mail(subject, message, 'arikecare@gmail.com', [member['email']], fail_silently=False)
+        send_mail(
+            subject,
+            message,
+            "arikecare@gmail.com",
+            [member["email"]],
+            fail_silently=False,
+        )

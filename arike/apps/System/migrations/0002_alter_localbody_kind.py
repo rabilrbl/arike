@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('System', '0001_initial'),
+        ("System", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='localbody',
-            name='kind',
-            field=models.IntegerField(choices=[(1, 'Grama Panchayath'), (2, 'Block Panchayath'), (3, 'District Panchayath'), (4, 'Nagar Panchayath'), (5, 'Municipality'), (6, 'Corporation'), (7, 'Others')], default=7),
+            model_name="localbody",
+            name="kind",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Grama Panchayath"),
+                    (2, "Block Panchayath"),
+                    (3, "District Panchayath"),
+                    (4, "Nagar Panchayath"),
+                    (5, "Municipality"),
+                    (6, "Corporation"),
+                    (7, "Others"),
+                ],
+                default=7,
+            ),
         ),
     ]
