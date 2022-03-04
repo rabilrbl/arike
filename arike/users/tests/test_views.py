@@ -11,11 +11,7 @@ from django.urls import reverse
 from arike.users.forms import UserAdminChangeForm
 from arike.users.models import User
 from arike.users.tests.factories import UserFactory
-from arike.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from arike.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 

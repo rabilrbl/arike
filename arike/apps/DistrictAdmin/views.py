@@ -1,4 +1,5 @@
 from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
+from allauth.account.models import EmailAddress
 from allauth.account.utils import user_pk_to_url_str
 from allauth.utils import build_absolute_uri
 from django.contrib import messages
@@ -13,7 +14,6 @@ from django.views.generic.list import ListView
 
 from arike.apps.DistrictAdmin.filters import UserFilter
 from arike.apps.DistrictAdmin.tasks import send_email
-from allauth.account.models import EmailAddress
 
 User = get_user_model()
 
