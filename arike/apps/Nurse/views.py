@@ -204,7 +204,7 @@ class TreatmentNoteView(PermissionRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.visit_schedule = VisitSchedule.objects.get(pk=self.kwargs["pk"])
+        form.instance.visit = VisitDetail.objects.get(visit_schedule=VisitSchedule.objects.get(pk=self.kwargs["pk"]))
         return super().form_valid(form)
 
 
