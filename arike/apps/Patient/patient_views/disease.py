@@ -35,7 +35,7 @@ class DiseaseCreate(PermissionRequiredMixin, CreateView):
     form_class = DiseaseCreateForm
     template_name = "Patient/disease/create.html"
 
-    permission_required = "Patient.create_disease"
+    permission_required = "Patient.add_disease"
 
     def get_success_url(self) -> str:
         return f"/patient/{self.kwargs['pk']}/disease/"
